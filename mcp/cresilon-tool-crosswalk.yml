@@ -1,0 +1,179 @@
+generated: '2026-08-04'
+method: derived
+source: mcp/cresilon-mcp.yml and openapi/cresilon-*-openapi.yml
+summary: >-
+  Binds every candidate MCP tool to the OpenAPI operation that backs it, so each tool inherits a
+  REAL input contract (that operation's parameters) rather than a guessed one. Because Cresilon
+  publishes no MCP server and no GraphQL endpoint, this crosswalk is a complete 1:1 derivation
+  from our own OpenAPI — there are no mcp_only rows and no rest_only rows. Recorded so the
+  binding is explicit and auditable rather than implied.
+surfaces:
+  openapi:
+    location: openapi/
+    files: 8
+    operations: 22
+    gated: false
+    note: >-
+      Derived by API Evangelist from the live WordPress route index. All 22 operations are
+      anonymous GETs verified live on 2026-08-04.
+  graphql:
+    endpoint: null
+    note: >-
+      No GraphQL surface. /graphql and /wp-json/graphql both returned 404 — WPGraphQL is not
+      installed on this site.
+  mcp:
+    url: null
+    published: false
+    gated: null
+    note: >-
+      No hosted MCP server exists. tools/list could not be called because there is no endpoint to
+      call it against. The tool list crosswalked here is our own candidate derivation, not a
+      provider-published manifest.
+crosswalk:
+- tool: search_cresilon
+  category: search
+  rest: [searchContent]
+  binding: rest
+  confidence: high
+  note: >-
+    Input contract is searchContent's parameters — search, type, subtype[], page, per_page,
+    exclude[], _fields. Returns subtype, which is required to route a hit to getPost vs getPage.
+- tool: list_news
+  category: content
+  rest: [listPosts]
+  binding: rest
+  confidence: high
+- tool: get_news_post
+  category: content
+  rest: [getPost]
+  binding: rest
+  confidence: high
+- tool: list_pages
+  category: content
+  rest: [listPages]
+  binding: rest
+  confidence: high
+- tool: get_page
+  category: content
+  rest: [getPage]
+  binding: rest
+  confidence: high
+- tool: list_media
+  category: media
+  rest: [listMedia]
+  binding: rest
+  confidence: high
+- tool: get_media_item
+  category: media
+  rest: [getMediaItem]
+  binding: rest
+  confidence: high
+- tool: list_categories
+  category: taxonomy
+  rest: [listCategories]
+  binding: rest
+  confidence: high
+- tool: get_category
+  category: taxonomy
+  rest: [getCategory]
+  binding: rest
+  confidence: high
+- tool: list_tags
+  category: taxonomy
+  rest: [listTags]
+  binding: rest
+  confidence: high
+- tool: get_tag
+  category: taxonomy
+  rest: [getTag]
+  binding: rest
+  confidence: high
+- tool: list_comments
+  category: content
+  rest: [listComments]
+  binding: rest
+  confidence: high
+  note: Backing collection verified empty (X-WP-Total 0) at capture.
+- tool: get_route_index
+  category: discovery
+  rest: [getRouteIndex]
+  binding: rest
+  confidence: high
+- tool: list_content_types
+  category: discovery
+  rest: [listTypes]
+  binding: rest
+  confidence: high
+- tool: get_content_type
+  category: discovery
+  rest: [getType]
+  binding: rest
+  confidence: high
+- tool: list_taxonomies
+  category: discovery
+  rest: [listTaxonomies]
+  binding: rest
+  confidence: high
+- tool: get_taxonomy
+  category: discovery
+  rest: [getTaxonomy]
+  binding: rest
+  confidence: high
+- tool: list_statuses
+  category: discovery
+  rest: [listStatuses]
+  binding: rest
+  confidence: high
+- tool: list_authors
+  category: discovery
+  rest: [listUsers]
+  binding: rest
+  confidence: high
+- tool: get_author
+  category: discovery
+  rest: [getUser]
+  binding: rest
+  confidence: high
+- tool: get_oembed
+  category: metadata
+  rest: [getOEmbed]
+  binding: rest
+  confidence: high
+- tool: get_seo_metadata
+  category: metadata
+  rest: [getYoastHead]
+  binding: rest
+  confidence: high
+mcp_only: []
+rest_only: []
+divergence:
+  detected: false
+  detail: >-
+    REST is the only projection of this data core. There is no GraphQL and no MCP server, so no
+    surface carries a capability the others lack. If Cresilon ever ships an MCP server, this file
+    is where the divergence would be recorded.
+coverage:
+  tools_named: 22
+  tools_bound: 22
+  mcp_only: 0
+  rest_ops_total: 22
+  rest_ops_with_tool: 22
+  binding_rate: '100%'
+excluded_from_crosswalk:
+  description: >-
+    Surfaces present on the host but deliberately not turned into tools, recorded so the omission
+    is a decision rather than an oversight.
+  items:
+  - surface: WordPress write operations (POST/PUT/PATCH/DELETE on wp/v2 routes)
+    reason: Return HTTP 401 anonymously; require an administrative credential. Not public.
+  - surface: 14 administrative read routes (settings, themes, plugins, menus, templates, ...)
+    reason: Return HTTP 401 anonymously. Catalogued in authentication/cresilon-authentication.yml.
+  - surface: /oembed/1.0/proxy
+    reason: Returns HTTP 401 anonymously.
+  - surface: Member area and distributor portal (/register/, /login/, /distributor-portal/)
+    reason: Human web pages behind a login or page password; no REST equivalent is exposed.
+x-evidence:
+  fetched: '2026-08-04'
+  method: >-
+    Each operationId above was verified present in the named openapi/ file; no tool is bound to an
+    operation that does not exist.

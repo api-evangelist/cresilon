@@ -1,0 +1,122 @@
+generated: '2026-08-04'
+method: derived
+source: >-
+  live error responses observed against https://cresilon.com/wp-json/ (2026-08-04), plus the 4xx
+  responses declared in this repo's openapi/ specs
+format: wordpress-rest-error
+rfc9457: false
+notes: >-
+  The Cresilon content API does NOT use RFC 9457 problem+json. Errors are returned as
+  application/json using the WordPress core error envelope: a machine-readable `code`, a
+  human-readable `message`, and a `data` object that repeats the HTTP status and, for validation
+  failures, carries per-parameter `params` and `details`. Every entry below was observed live —
+  none are inferred from the WordPress source. Note the status semantics quirk this surface
+  inherits: capability failures are returned as 401 Unauthorized rather than 403 Forbidden, even
+  though no credential would help an anonymous public caller.
+envelope:
+  media_type: application/json
+  fields:
+    code: Machine-readable error slug, e.g. rest_post_invalid_id.
+    message: Human-readable message.
+    data.status: HTTP status code, repeated inside the body.
+    data.params: Map of parameter name to validation message (validation failures only).
+    data.details: Per-parameter detail objects with a nested code and message (validation failures only).
+  example:
+    code: rest_invalid_param
+    message: 'Invalid parameter(s): per_page'
+    data:
+      status: 400
+      params:
+        per_page: per_page must be between 1 (inclusive) and 100 (inclusive)
+      details:
+        per_page:
+          code: rest_out_of_bounds
+          message: per_page must be between 1 (inclusive) and 100 (inclusive)
+          data: null
+problems:
+- code: rest_invalid_param
+  status: 400
+  title: Invalid parameter
+  detail: One or more query parameters failed the route's argument validation.
+  remediation: >-
+    Read data.params for the offending parameter and data.details for its nested code. per_page
+    must be between 1 and 100; page must be a positive integer; order must be asc or desc.
+  observed: GET /wp/v2/posts?per_page=999
+  source_operation: openapi/cresilon-posts-api-openapi.yml#listPosts
+- code: rest_post_invalid_id
+  status: 404
+  title: Invalid post ID
+  detail: No published object exists with the requested numeric ID for this post type.
+  remediation: >-
+    List the collection first and use an id returned there. Note that post and page IDs share one
+    numbering space on this site — id 17999 is a page, not a post, so requesting it under
+    /wp/v2/posts/{id} returns this error.
+  observed: GET /wp/v2/posts/999999
+  source_operation: openapi/cresilon-posts-api-openapi.yml#getPost
+- code: rest_no_route
+  status: 404
+  title: No route matched
+  detail: No route was found matching the URL and request method.
+  remediation: >-
+    Fetch the route index at /wp-json/ (getRouteIndex) and confirm the route pattern and method
+    are registered. The index advertises 1,021 routes across 45 namespaces, most of which are
+    plugin-internal and not anonymously readable.
+  observed: GET /wp/v2/nonexistent
+  source_operation: openapi/cresilon-discovery-api-openapi.yml#getRouteIndex
+- code: rest_forbidden
+  status: 401
+  title: Not allowed
+  detail: The route exists but the anonymous caller lacks the capability to read it.
+  remediation: >-
+    This route is administrative. There is no public credential for it — do not attempt to
+    authenticate against cresilon.com.
+  observed: GET /wp/v2/settings
+- code: rest_cannot_view_themes
+  status: 401
+  title: Cannot view themes
+  detail: Theme metadata is not anonymously readable.
+  observed: GET /wp/v2/themes
+- code: rest_cannot_view_plugins
+  status: 401
+  title: Cannot manage plugins
+  detail: Plugin metadata is not anonymously readable.
+  observed: GET /wp/v2/plugins
+- code: rest_cannot_view
+  status: 401
+  title: Cannot view menus
+  detail: Navigation menu terms and menu items are not anonymously readable.
+  observed: GET /wp/v2/menus and GET /wp/v2/menu-items
+- code: rest_block_type_cannot_view
+  status: 401
+  title: Cannot manage block types
+  detail: The block type registry is not anonymously readable.
+  observed: GET /wp/v2/block-types
+- code: rest_cannot_manage_templates
+  status: 401
+  title: Cannot access templates
+  detail: Block templates and template parts are not anonymously readable.
+  observed: GET /wp/v2/templates and GET /wp/v2/template-parts
+- code: rest_pattern_directory_cannot_view
+  status: 401
+  title: Cannot browse the block pattern directory
+  detail: The local block pattern directory is not anonymously readable.
+  observed: GET /wp/v2/pattern-directory/patterns
+- code: rest_cannot_read
+  status: 401
+  title: Cannot read protected resource
+  detail: >-
+    Returned for two distinct gated resources on this site — post revision history and the font
+    family registry.
+  observed: GET /wp/v2/posts/18107/revisions and GET /wp/v2/font-families
+- code: invalid_user_permission_view_admin
+  status: 401
+  title: Insufficient Jetpack permissions
+  detail: >-
+    The Jetpack administrative namespace is not anonymously readable. This is the one observed
+    code that does NOT follow the WordPress core `rest_*` naming convention — a caller matching
+    on the `rest_` prefix will miss it.
+  observed: GET /jetpack/v4/site
+x-evidence:
+  fetched: '2026-08-04'
+  host: https://cresilon.com
+  method: every code above returned from a live anonymous request; no codes inferred

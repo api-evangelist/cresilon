@@ -1,0 +1,258 @@
+generated: '2026-08-04'
+method: probed
+source: live anonymous requests to https://cresilon.com/wp-json/ (2026-08-04)
+summary: >-
+  Real request/response examples captured from the live Cresilon content API. Every payload below
+  is verbatim (trimmed with `_fields` where noted, and truncated where marked) — nothing is
+  synthesised. These bind the derived openapi/ specs to observed reality.
+examples:
+- name: list-news-posts
+  operation: openapi/cresilon-posts-api-openapi.yml#listPosts
+  request:
+    method: GET
+    url: >-
+      https://cresilon.com/wp-json/wp/v2/posts?per_page=2&_fields=id,date,slug,link,title,excerpt,categories,tags,featured_media,author,type,status
+    headers: {}
+  response:
+    status: 200
+    headers:
+      content-type: application/json; charset=UTF-8
+      x-wp-total: '36'
+      x-wp-totalpages: '18'
+      link: <https://cresilon.com/wp-json/wp/v2/posts?per_page=2&page=2>; rel="next"
+      x-robots-tag: noindex
+      strict-transport-security: max-age=31536000
+    body:
+    - id: 18107
+      date: '2026-07-07T07:29:04'
+      slug: traumagel-study-highlights-sustained-hemorrhage-control-and-tourniquet-removal-without-rebleeding
+      status: publish
+      type: post
+      link: https://cresilon.com/2026/07/07/traumagel-study-highlights-sustained-hemorrhage-control-and-tourniquet-removal-without-rebleeding/
+      title:
+        rendered: TRAUMAGEL Study Highlights Sustained Hemorrhage Control and Tourniquet Removal Without Rebleeding
+      author: 211412379
+      featured_media: 18109
+      categories: [1]
+      tags: []
+    - id: 17726
+      date: '2026-04-27T09:30:02'
+      slug: cresilon-announces-traumagel-presentations-at-the-2026-special-operations-medical-association-scientific-assembly
+      status: publish
+      type: post
+      link: https://cresilon.com/2026/04/27/cresilon-announces-traumagel-presentations-at-the-2026-special-operations-medical-association-scientific-assembly/
+      title:
+        rendered: Cresilon Announces TRAUMAGEL Presentations at the 2026 Special Operations Medical Association Scientific Assembly
+      author: 211412379
+      featured_media: 17729
+      categories: [1]
+      tags: []
+  note: >-
+    `excerpt` was returned but is omitted here for length. Demonstrates the `_fields`
+    sparse-field parameter, which drops the multi-kilobyte `yoast_head` string and the full
+    `yoast_head_json` graph from each item. Note `author` is the same id on both — the site
+    publishes under one shared account — and `tags` is empty, which is true of 34 of the 36 posts.
+- name: list-categories
+  operation: openapi/cresilon-taxonomy-api-openapi.yml#listCategories
+  request:
+    method: GET
+    url: https://cresilon.com/wp-json/wp/v2/categories?per_page=100&_fields=id,slug,name,count
+  response:
+    status: 200
+    headers:
+      x-wp-total: '2'
+    body:
+    - {id: 1, count: 36, name: News, slug: uncategorized}
+    - {id: 1365, count: 0, name: Press Releases, slug: press-releases}
+  note: >-
+    The whole taxonomy. Note the slug/name mismatch on id 1 — it is the WordPress default
+    `uncategorized` term renamed to "News" — so match on `id` or `name`, never on `slug`. The
+    `Press Releases` term exists but is unused.
+- name: list-tags
+  operation: openapi/cresilon-taxonomy-api-openapi.yml#listTags
+  request:
+    method: GET
+    url: https://cresilon.com/wp-json/wp/v2/tags?per_page=100&_fields=id,slug,name,count
+  response:
+    status: 200
+    headers:
+      x-wp-total: '4'
+    body:
+    - {id: 1456, count: 2, name: biotech, slug: biotech}
+    - {id: 1459, count: 2, name: cresilon, slug: cresilon}
+    - {id: 1457, count: 2, name: fda clearance, slug: fda-clearance}
+    - {id: 1458, count: 2, name: vetigel, slug: vetigel}
+  note: Tagging is effectively unused — 4 tags applied to 2 posts each out of 36.
+- name: list-pages
+  operation: openapi/cresilon-pages-api-openapi.yml#listPages
+  request:
+    method: GET
+    url: https://cresilon.com/wp-json/wp/v2/pages?per_page=3&_fields=id,slug,link,title,parent,menu_order,type
+  response:
+    status: 200
+    headers:
+      x-wp-total: '53'
+    body:
+    - id: 17999
+      slug: when-seconds-matter-introducing-traumagel-for-rapid-bleeding-control-in-pa
+      type: page
+      link: https://cresilon.com/when-seconds-matter-introducing-traumagel-for-rapid-bleeding-control-in-pa/
+      title:
+        rendered: 'When Seconds Matter: Introducing TRAUMAGEL® for Rapid Bleeding Control in PA'
+      parent: 0
+      menu_order: 0
+    - id: 17887
+      slug: case-studies
+      type: page
+      link: https://cresilon.com/case-studies/
+      title:
+        rendered: Case Studies
+      parent: 0
+      menu_order: 0
+    - id: 17834
+      slug: clinical-evaluation-product
+      type: page
+      link: https://cresilon.com/clinical-evaluation-product/
+      title:
+        rendered: Clinical Evaluation Product
+      parent: 0
+      menu_order: 0
+  note: >-
+    Illustrates the id-space collision that trips consumers on this site: 17999 is a PAGE, but it
+    reads like a news headline and its id sits between two post ids. Requesting it under
+    /wp/v2/posts/17999 returns 404 rest_post_invalid_id.
+- name: list-media
+  operation: openapi/cresilon-media-api-openapi.yml#listMedia
+  request:
+    method: GET
+    url: https://cresilon.com/wp-json/wp/v2/media?per_page=1&_fields=id,slug,title,source_url,mime_type,media_type,filesize,post,alt_text
+  response:
+    status: 200
+    headers:
+      x-wp-total: '1307'
+    body:
+    - id: 18149
+      slug: joe-and-team-with-cobb-county-fire-emergency-services-m
+      title:
+        rendered: joe-and-team-with-cobb-county-fire-emergency-services-m
+      alt_text: ''
+      media_type: image
+      mime_type: image/webp
+      post: null
+      source_url: https://cresilon.com/wp-content/uploads/2026/07/joe-and-team-with-cobb-county-fire-emergency-services-m.webp
+      filesize: 101184
+  note: >-
+    `post` is null — this library item is unattached. `alt_text` is empty, which is common across
+    this library, so do not rely on it for image description.
+- name: search-content
+  operation: openapi/cresilon-search-api-openapi.yml#searchContent
+  request:
+    method: GET
+    url: https://cresilon.com/wp-json/wp/v2/search?search=traumagel&per_page=2
+  response:
+    status: 200
+    body:
+    - id: 18107
+      title: TRAUMAGEL Study Highlights Sustained Hemorrhage Control and Tourniquet Removal Without Rebleeding
+      url: https://cresilon.com/2026/07/07/traumagel-study-highlights-sustained-hemorrhage-control-and-tourniquet-removal-without-rebleeding/
+      type: post
+      subtype: post
+    - id: 17999
+      title: 'When Seconds Matter: Introducing TRAUMAGEL® for Rapid Bleeding Control in PA'
+      url: https://cresilon.com/when-seconds-matter-introducing-traumagel-for-rapid-bleeding-control-in-pa/
+      type: post
+      subtype: page
+  note: >-
+    The key example on this surface. `type` is "post" for BOTH rows — it is the search-object
+    type, not the content type. Only `subtype` distinguishes a post from a page, and it is what
+    you must branch on to choose getPost vs getPage. `_links.self.targetHints.allow` is `["GET"]`
+    on both, confirming read-only.
+- name: get-oembed
+  operation: openapi/cresilon-oembed-api-openapi.yml#getOEmbed
+  request:
+    method: GET
+    url: https://cresilon.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fcresilon.com%2Ftraumagel%2F
+  response:
+    status: 200
+    body:
+      version: '1.0'
+      provider_name: Cresilon
+      provider_url: https://cresilon.com
+      author_name: cresilon
+      author_url: https://cresilon.com/author/cresilon/
+      title: Trauma Care - Cresilon
+      type: rich
+      width: 600
+      height: 338
+      thumbnail_url: https://cresilon.com/wp-content/uploads/2025/07/TG-launch-01.jpg
+      thumbnail_width: 1920
+      thumbnail_height: 1080
+      html: <TRUNCATED — a wp-embedded-content blockquote, a sandboxed iframe, and the inlined wp-embed.min.js>
+  note: >-
+    The `description` field (also returned, omitted here for length) carries the page's opening
+    prose, which makes this the cheapest one-call summary of a Cresilon product page. The `html`
+    field embeds an inline <script>; treat it as untrusted markup, not something to eval.
+- name: list-statuses
+  operation: openapi/cresilon-discovery-api-openapi.yml#listStatuses
+  request:
+    method: GET
+    url: https://cresilon.com/wp-json/wp/v2/statuses
+  response:
+    status: 200
+    body:
+      publish: {name: Published, public: true, queryable: true, slug: publish, date_floating: false}
+      acf-disabled: {name: Inactive, public: true, queryable: true, slug: acf-disabled, date_floating: false}
+  note: >-
+    Two statuses are visible anonymously, not one. `acf-disabled` is an Advanced Custom Fields
+    internal status; it is queryable but holds no reader-facing content.
+- name: error-invalid-per-page
+  operation: openapi/cresilon-posts-api-openapi.yml#listPosts
+  request:
+    method: GET
+    url: https://cresilon.com/wp-json/wp/v2/posts?per_page=999
+  response:
+    status: 400
+    body:
+      code: rest_invalid_param
+      message: 'Invalid parameter(s): per_page'
+      data:
+        status: 400
+        params:
+          per_page: per_page must be between 1 (inclusive) and 100 (inclusive)
+        details:
+          per_page:
+            code: rest_out_of_bounds
+            message: per_page must be between 1 (inclusive) and 100 (inclusive)
+            data: null
+  note: The full validation envelope, including the nested `details` block.
+- name: error-not-found
+  operation: openapi/cresilon-posts-api-openapi.yml#getPost
+  request:
+    method: GET
+    url: https://cresilon.com/wp-json/wp/v2/posts/999999
+  response:
+    status: 404
+    body:
+      code: rest_post_invalid_id
+      message: Invalid post ID.
+      data:
+        status: 404
+- name: error-gated-route
+  operation: null
+  request:
+    method: GET
+    url: https://cresilon.com/wp-json/wp/v2/settings
+  response:
+    status: 401
+    body:
+      code: rest_forbidden
+      message: Sorry, you are not allowed to do that.
+      data:
+        status: 401
+  note: >-
+    Recorded to make the public/private boundary concrete. 401, not 403, and no
+    WWW-Authenticate challenge — there is no credential a public caller can supply.
+x-evidence:
+  fetched: '2026-08-04'
+  host: https://cresilon.com
+  method: every example above is a verbatim live capture; none synthesised

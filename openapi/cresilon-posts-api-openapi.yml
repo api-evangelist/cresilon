@@ -1,0 +1,552 @@
+openapi: 3.1.0
+info:
+  title: Cresilon News & Press Releases API
+  version: wp/v2
+  summary: Public read surface of the Cresilon corporate news and press-release content API.
+  description: Cresilon publishes its corporate website (cresilon.com) on WordPress (WordPress.com Atomic
+    hosting, nginx) with the core WordPress REST API enabled and anonymously readable. This specification
+    was DERIVED by discovering the live route index at https://cresilon.com/wp-json/ and probing each
+    route for anonymous access; only routes verified to return HTTP 200 without credentials are documented
+    here as public operations. Write operations exist on the same routes but require authentication (WordPress
+    cookie + X-WP-Nonce, or Application Passwords) and are not documented here; anonymous requests to
+    them return HTTP 401. This is NOT a product API offered by Cresilon to customers — Cresilon is a biotechnology
+    and medical-device manufacturer, not a software vendor. This is the content API of their marketing
+    site, captured for discovery purposes. This document covers the `post` type, which backs Cresilon's
+    news and press-release stream — FDA clearance announcements, TRAUMAGEL and VETIGEL launch news, clinical
+    study results, conference presentations and executive interviews. At time of capture the collection
+    held 36 published posts (observed in the X-WP-Total response header), spanning 2018 to July 2026.
+  contact:
+    name: Cresilon
+    url: https://cresilon.com/contact-us/
+    email: info@cresilon.com
+  license:
+    name: Site content — all rights reserved, see Terms of Use
+    url: https://cresilon.com/terms-of-use/
+  x-apis-io-provenance:
+    method: derived
+    source: https://cresilon.com/wp-json/
+    derived_on: '2026-08-04'
+    note: Routes enumerated from the live wp-json discovery document (1,021 routes across 45 namespaces);
+      every operation below was probed anonymously and returned HTTP 200. Schemas reflect the field set
+      observed in live responses on 2026-08-04, including the `acf` (Advanced Custom Fields), Jetpack
+      and `yoast_head_json` extensions this site adds. No fabricated operations or parameters.
+servers:
+- url: https://cresilon.com/wp-json
+  description: Production
+tags:
+- name: Posts
+  description: Cresilon corporate news and press releases.
+- name: Comments
+  description: Site comments — anonymously readable, empty at capture.
+paths:
+  /wp/v2/posts:
+    get:
+      tags:
+      - Posts
+      operationId: listPosts
+      summary: List Cresilon news posts
+      description: 'Returns a paginated collection of published Cresilon news and press-release posts.
+        Total item and page counts are returned in the X-WP-Total and X-WP-TotalPages response headers,
+        and RFC 8288 `Link` headers carry `next` / `prev` relations. Verified live 2026-08-04: X-WP-Total:
+        36.'
+      parameters:
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/perPage'
+      - $ref: '#/components/parameters/search'
+      - $ref: '#/components/parameters/order'
+      - $ref: '#/components/parameters/orderby'
+      - $ref: '#/components/parameters/context'
+      - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/embed'
+      - $ref: '#/components/parameters/include'
+      - $ref: '#/components/parameters/exclude'
+      - $ref: '#/components/parameters/offset'
+      - $ref: '#/components/parameters/slugParam'
+      - name: categories
+        in: query
+        description: Limit results to posts assigned to the given category IDs (1 = News, 1365 = Press
+          Releases).
+        schema:
+          type: array
+          items:
+            type: integer
+      - name: categories_exclude
+        in: query
+        description: Exclude posts assigned to the given category IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+      - name: tags
+        in: query
+        description: Limit results to posts assigned to the given tag IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+      - name: tags_exclude
+        in: query
+        description: Exclude posts assigned to the given tag IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+      - name: after
+        in: query
+        description: Limit results to posts published after a given ISO 8601 date.
+        schema:
+          type: string
+          format: date-time
+      - name: before
+        in: query
+        description: Limit results to posts published before a given ISO 8601 date.
+        schema:
+          type: string
+          format: date-time
+      - name: sticky
+        in: query
+        description: Limit results to sticky posts.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: A page of Cresilon news posts.
+          headers:
+            X-WP-Total:
+              $ref: '#/components/headers/XWPTotal'
+            X-WP-TotalPages:
+              $ref: '#/components/headers/XWPTotalPages'
+            Link:
+              $ref: '#/components/headers/LinkPagination'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+              examples:
+                firstPage:
+                  summary: First page of Cresilon news posts
+                  externalValue: https://cresilon.com/wp-json/wp/v2/posts?per_page=1
+        '400':
+          $ref: '#/components/responses/InvalidParam'
+  /wp/v2/posts/{id}:
+    get:
+      tags:
+      - Posts
+      operationId: getPost
+      summary: Get a Cresilon news post
+      description: Returns a single published news post by its numeric WordPress post ID.
+      parameters:
+      - $ref: '#/components/parameters/id'
+      - $ref: '#/components/parameters/context'
+      - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/embed'
+      responses:
+        '200':
+          description: The requested post.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /wp/v2/comments:
+    get:
+      tags:
+      - Comments
+      operationId: listComments
+      summary: List comments
+      description: 'Returns approved comments across the site. Verified live 2026-08-04: the route is
+        anonymously readable and the collection is empty (X-WP-Total: 0).'
+      parameters:
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/perPage'
+      - $ref: '#/components/parameters/context'
+      - name: post
+        in: query
+        description: Limit results to comments assigned to specific post IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+      responses:
+        '200':
+          description: A page of comments (empty at time of capture).
+          headers:
+            X-WP-Total:
+              $ref: '#/components/headers/XWPTotal'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+        '400':
+          $ref: '#/components/responses/InvalidParam'
+components:
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: Unique numeric identifier for the object.
+      schema:
+        type: integer
+    page:
+      name: page
+      in: query
+      description: Current page of the collection. Defaults to 1.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    perPage:
+      name: per_page
+      in: query
+      description: 'Maximum number of items to be returned in the result set. Verified live: values outside
+        1-100 return HTTP 400 `rest_invalid_param`.'
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 10
+    search:
+      name: search
+      in: query
+      description: Limit results to those matching a string.
+      schema:
+        type: string
+    order:
+      name: order
+      in: query
+      description: Order sort attribute ascending or descending.
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+        default: desc
+    orderby:
+      name: orderby
+      in: query
+      description: Sort collection by object attribute.
+      schema:
+        type: string
+        enum:
+        - author
+        - date
+        - id
+        - include
+        - modified
+        - parent
+        - relevance
+        - slug
+        - include_slugs
+        - title
+        default: date
+    context:
+      name: context
+      in: query
+      description: Scope under which the request is made; determines fields present in the response. Only
+        `view` and `embed` are available anonymously — `edit` returns HTTP 401.
+      schema:
+        type: string
+        enum:
+        - view
+        - embed
+        default: view
+    fields:
+      name: _fields
+      in: query
+      description: Comma-separated list of fields to limit the response to. Verified live, e.g. `_fields=id,slug,link,title`.
+      schema:
+        type: string
+    embed:
+      name: _embed
+      in: query
+      description: Embed linked resources (author, featured media, terms) into the response.
+      schema:
+        type: boolean
+    include:
+      name: include
+      in: query
+      description: Limit result set to specific IDs.
+      schema:
+        type: array
+        items:
+          type: integer
+    exclude:
+      name: exclude
+      in: query
+      description: Ensure result set excludes specific IDs.
+      schema:
+        type: array
+        items:
+          type: integer
+    offset:
+      name: offset
+      in: query
+      description: Offset the result set by a specific number of items.
+      schema:
+        type: integer
+    slugParam:
+      name: slug
+      in: query
+      description: Limit results to items with one of the given slugs.
+      schema:
+        type: array
+        items:
+          type: string
+  responses:
+    NotFound:
+      description: The requested object does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: rest_post_invalid_id
+            message: Invalid post ID.
+            data:
+              status: 404
+    InvalidParam:
+      description: One or more query parameters failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: rest_invalid_param
+            message: 'Invalid parameter(s): per_page'
+            data:
+              status: 400
+              params:
+                per_page: per_page must be between 1 (inclusive) and 100 (inclusive)
+    Unauthorized:
+      description: 'The route exists but requires authentication. Verified live: anonymous requests to
+        privileged routes return this envelope with HTTP 401.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: rest_forbidden
+            message: Sorry, you are not allowed to do that.
+            data:
+              status: 401
+  schemas:
+    RenderedText:
+      type: object
+      description: WordPress rendered-text object.
+      properties:
+        rendered:
+          type: string
+          description: HTML-rendered value.
+      required:
+      - rendered
+    Post:
+      type: object
+      description: A Cresilon news / press-release post as returned anonymously in `view` context. Field
+        set observed live on 2026-08-04.
+      properties:
+        id:
+          type: integer
+        date:
+          type: string
+          format: date-time
+          description: Publication date in the site's local timezone (UTC-4 observed).
+        date_gmt:
+          type: string
+          format: date-time
+        guid:
+          $ref: '#/components/schemas/RenderedText'
+        modified:
+          type: string
+          format: date-time
+        modified_gmt:
+          type: string
+          format: date-time
+        slug:
+          type: string
+        status:
+          type: string
+          description: Publication status; anonymously only `publish` is returned.
+        type:
+          type: string
+          const: post
+        link:
+          type: string
+          format: uri
+        title:
+          $ref: '#/components/schemas/RenderedText'
+        content:
+          allOf:
+          - $ref: '#/components/schemas/RenderedText'
+          - type: object
+            properties:
+              protected:
+                type: boolean
+        excerpt:
+          allOf:
+          - $ref: '#/components/schemas/RenderedText'
+          - type: object
+            properties:
+              protected:
+                type: boolean
+        author:
+          type: integer
+          description: Author user ID. The users collection IS anonymously readable on this site (1 author).
+        featured_media:
+          type: integer
+          description: Media (attachment) ID of the featured image, or 0 when unset.
+        comment_status:
+          type: string
+          enum:
+          - open
+          - closed
+        ping_status:
+          type: string
+          enum:
+          - open
+          - closed
+        sticky:
+          type: boolean
+        template:
+          type: string
+        format:
+          type: string
+        meta:
+          type: object
+          additionalProperties: true
+        categories:
+          type: array
+          items:
+            type: integer
+        tags:
+          type: array
+          items:
+            type: integer
+        class_list:
+          type: array
+          items:
+            type: string
+        acf:
+          description: Advanced Custom Fields payload exposed by the site's ACF configuration.
+          oneOf:
+          - type: object
+            additionalProperties: true
+          - type: array
+        jetpack_featured_media_url:
+          type: string
+          description: Jetpack-added direct URL for the featured image.
+        jetpack_shortlink:
+          type: string
+          format: uri
+        jetpack_likes_enabled:
+          type: boolean
+        jetpack_sharing_enabled:
+          type: boolean
+        jetpack_publicize_connections:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        yoast_head:
+          type: string
+          description: Rendered Yoast SEO head HTML for this object.
+        yoast_head_json:
+          type: object
+          additionalProperties: true
+          description: Structured Yoast SEO metadata, including the JSON-LD `schema` graph.
+        _links:
+          type: object
+          additionalProperties: true
+          description: HAL-style link relations (self, collection, author, wp:term, wp:attachment, replies).
+      required:
+      - id
+      - date
+      - slug
+      - type
+      - link
+      - title
+      - content
+      - categories
+      - tags
+    Comment:
+      type: object
+      description: 'A WordPress comment. Verified live: the collection is anonymously readable and returned
+        X-WP-Total: 0 on 2026-08-04 — Cresilon publishes no comments.'
+      properties:
+        id:
+          type: integer
+        post:
+          type: integer
+        parent:
+          type: integer
+        author:
+          type: integer
+        author_name:
+          type: string
+        date:
+          type: string
+          format: date-time
+        content:
+          $ref: '#/components/schemas/RenderedText'
+        link:
+          type: string
+          format: uri
+        status:
+          type: string
+        type:
+          type: string
+        _links:
+          type: object
+          additionalProperties: true
+    Error:
+      type: object
+      description: The WordPress REST error envelope, verified live against cresilon.com. Note this is
+        NOT RFC 9457 application/problem+json — it is served as application/json with a WordPress-specific
+        shape.
+      properties:
+        code:
+          type: string
+          description: Machine-readable WordPress error code, e.g. `rest_post_invalid_id`.
+        message:
+          type: string
+          description: Human-readable message.
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+              description: HTTP status code, repeated in the body.
+            params:
+              type: object
+              additionalProperties:
+                type: string
+            details:
+              type: object
+              additionalProperties: true
+          required:
+          - status
+      required:
+      - code
+      - message
+      - data
+  headers:
+    XWPTotal:
+      description: Total number of items in the collection.
+      schema:
+        type: integer
+      example: 36
+    XWPTotalPages:
+      description: Total number of pages in the collection at the current per_page.
+      schema:
+        type: integer
+      example: 18
+    LinkPagination:
+      description: RFC 8288 Link header carrying `next` and `prev` pagination relations.
+      schema:
+        type: string
+      example: <https://cresilon.com/wp-json/wp/v2/posts?per_page=2&page=2>; rel="next"

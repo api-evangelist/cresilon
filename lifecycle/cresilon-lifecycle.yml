@@ -1,0 +1,108 @@
+generated: '2026-08-04'
+method: derived
+source: live probes of https://cresilon.com/ and https://cresilon.com/wp-json/ (2026-08-04)
+summary: >-
+  Cresilon operates no API program, so it publishes no API versioning policy, no deprecation
+  policy, no SLA, no status page and no API changelog. What versioning exists is inherited from
+  the WordPress platform and its plugins. Absence is recorded here as observed fact — no
+  StatusPage and no Deprecation pointer is wired for this provider because neither page exists.
+versioning:
+  scheme: uri-path-namespace
+  current: wp/v2
+  namespaces:
+  - namespace: wp/v2
+    surface: WordPress core content API (posts, pages, media, taxonomy, search, discovery, authors)
+  - namespace: oembed/1.0
+    surface: oEmbed provider endpoint
+  - namespace: yoast/v1
+    surface: Yoast SEO head endpoint
+  namespaces_total: 45
+  routes_total: 1021
+  owner: platform
+  detail: >-
+    The version segment is set by WordPress core and by each plugin, not by Cresilon. This site
+    carries an unusually large plugin surface — 45 registered namespaces including jetpack/v4,
+    wpdm and wpdmpp/v1 (WordPress Download Manager, behind the member area), elementor/v1,
+    astra/v1, yoast/v1, redirection/v1, akismet/v1, monsterinsights/v1 and code-snippets/v1 — and
+    a WordPress core or plugin upgrade can alter this surface without any notice to callers. That
+    is the principal consumption risk here.
+  policy_url: null
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  detail: >-
+    No Sunset or Deprecation response header was observed (RFC 8594), and no deprecation policy
+    page exists on cresilon.com. No operation in this repo's openapi/ specs is marked deprecated.
+deprecated_operations: []
+sla:
+  url: null
+  published: false
+  uptime_target: null
+status_page:
+  url: null
+  published: false
+  probed:
+  - url: https://status.cresilon.com
+    result: did not resolve
+  detail: >-
+    No status page exists. Availability of this surface is the availability of the marketing site,
+    which is hosted on WordPress.com Atomic (observed via `host-header: WordPress.com` and the
+    `a8c-cdn` server-timing entry) — so its real availability tracks that platform, about which
+    Cresilon publishes nothing.
+changelog:
+  url: null
+  published: false
+  detail: >-
+    No API changelog. The company's News page (https://cresilon.com/media/) and its RSS feed
+    (https://cresilon.com/feed/) carry corporate press releases — FDA clearances, product
+    launches, clinical study results, conference presentations — not release notes. Most recent
+    post observed 2026-07-07; 36 posts total spanning to 2018.
+support:
+  url: https://cresilon.com/contact-us/
+  email: info@cresilon.com
+  customer_service: customerservice@cresilon.com
+  sales: sales@cresilon.com
+  phone: '+1 (347) 435-2226'
+  detail: >-
+    General corporate, sales and customer-service contact only. There is no developer support
+    channel, forum, or developer relations contact. The distributor portal at
+    /distributor-portal/ is a password-gated human page, not a support surface.
+content_freshness:
+  posts: 36
+  pages: 53
+  media: 1307
+  latest_post: '2026-07-07'
+  sitemap_lastmod: '2026-07-31'
+  detail: >-
+    Observed live 2026-08-04. The content behind this API is actively maintained — the image
+    sitemap was regenerated four days before capture — but the interface itself is unmanaged.
+stability:
+  assessment: unmanaged
+  detail: >-
+    This is an incidental API surface. It is public and stable in shape because WordPress core is,
+    but Cresilon makes no commitment about it, monitors no consumers, and would have no mechanism
+    to warn them of a breaking change. There is no caching contract either (no Cache-Control, no
+    ETag), so consumers cannot revalidate cheaply. Pin to nothing, poll conservatively, and
+    tolerate the surface disappearing entirely.
+x-evidence:
+  fetched: '2026-08-04'
+  host: https://cresilon.com
+  pages_probed:
+    /our-story/: 200
+    /contact-us/: 200
+    /media/: 200
+    /management/: 200
+    /publications/: 200
+    /case-studies/: 200
+    /privacy-policy/: 200
+    /terms-of-use/: 200
+    /distributor-portal/: 200
+    /careers/: 404
+  subdomains_probed:
+    status.cresilon.com: did not resolve
+    api.cresilon.com: did not resolve
+    developer.cresilon.com: did not resolve
+    docs.cresilon.com: did not resolve
+    trust.cresilon.com: did not resolve

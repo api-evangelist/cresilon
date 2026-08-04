@@ -1,0 +1,264 @@
+openapi: 3.1.0
+info:
+  title: Cresilon SEO Metadata API
+  version: wp/v2
+  summary: Yoast SEO head and JSON-LD graph for any cresilon.com URL.
+  description: Cresilon publishes its corporate website (cresilon.com) on WordPress (WordPress.com Atomic
+    hosting, nginx) with the core WordPress REST API enabled and anonymously readable. This specification
+    was DERIVED by discovering the live route index at https://cresilon.com/wp-json/ and probing each
+    route for anonymous access; only routes verified to return HTTP 200 without credentials are documented
+    here as public operations. Write operations exist on the same routes but require authentication (WordPress
+    cookie + X-WP-Nonce, or Application Passwords) and are not documented here; anonymous requests to
+    them return HTTP 401. This is NOT a product API offered by Cresilon to customers — Cresilon is a biotechnology
+    and medical-device manufacturer, not a software vendor. This is the content API of their marketing
+    site, captured for discovery purposes. This document covers the Yoast SEO `get_head` route, which
+    returns the rendered SEO metadata and the JSON-LD schema graph for any cresilon.com URL. For an agent
+    this is the cheapest structured description of a Cresilon page — organization identity, canonical
+    URL, social cards and article metadata — without parsing the page HTML.
+  contact:
+    name: Cresilon
+    url: https://cresilon.com/contact-us/
+    email: info@cresilon.com
+  license:
+    name: Site content — all rights reserved, see Terms of Use
+    url: https://cresilon.com/terms-of-use/
+  x-apis-io-provenance:
+    method: derived
+    source: https://cresilon.com/wp-json/
+    derived_on: '2026-08-04'
+    note: Routes enumerated from the live wp-json discovery document (1,021 routes across 45 namespaces);
+      every operation below was probed anonymously and returned HTTP 200. Schemas reflect the field set
+      observed in live responses on 2026-08-04, including the `acf` (Advanced Custom Fields), Jetpack
+      and `yoast_head_json` extensions this site adds. No fabricated operations or parameters.
+servers:
+- url: https://cresilon.com/wp-json
+  description: Production
+tags:
+- name: SEO
+  description: Rendered SEO head metadata and JSON-LD structured data.
+paths:
+  /yoast/v1/get_head:
+    get:
+      tags:
+      - SEO
+      operationId: getYoastHead
+      summary: Get rendered SEO head metadata for a Cresilon URL
+      description: Yoast SEO head endpoint. Returns the rendered `<head>` SEO markup for any cresilon.com
+        URL together with its structured JSON-LD `schema` graph (Organization, WebSite, WebPage, BreadcrumbList
+        and Article nodes). Verified live 2026-08-04 against the home page and /our-story/.
+      parameters:
+      - name: url
+        in: query
+        required: true
+        description: The cresilon.com URL to render SEO metadata for.
+        schema:
+          type: string
+          format: uri
+      responses:
+        '200':
+          description: Rendered SEO head and its JSON-LD graph.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/YoastHead'
+              examples:
+                ourStory:
+                  summary: SEO head for /our-story/
+                  externalValue: https://cresilon.com/wp-json/yoast/v1/get_head?url=https%3A%2F%2Fcresilon.com%2Four-story%2F
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: Unique numeric identifier for the object.
+      schema:
+        type: integer
+    page:
+      name: page
+      in: query
+      description: Current page of the collection. Defaults to 1.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    perPage:
+      name: per_page
+      in: query
+      description: 'Maximum number of items to be returned in the result set. Verified live: values outside
+        1-100 return HTTP 400 `rest_invalid_param`.'
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 10
+    search:
+      name: search
+      in: query
+      description: Limit results to those matching a string.
+      schema:
+        type: string
+    order:
+      name: order
+      in: query
+      description: Order sort attribute ascending or descending.
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+        default: desc
+    orderby:
+      name: orderby
+      in: query
+      description: Sort collection by object attribute.
+      schema:
+        type: string
+        enum:
+        - author
+        - date
+        - id
+        - include
+        - modified
+        - parent
+        - relevance
+        - slug
+        - include_slugs
+        - title
+        default: date
+    context:
+      name: context
+      in: query
+      description: Scope under which the request is made; determines fields present in the response. Only
+        `view` and `embed` are available anonymously — `edit` returns HTTP 401.
+      schema:
+        type: string
+        enum:
+        - view
+        - embed
+        default: view
+    fields:
+      name: _fields
+      in: query
+      description: Comma-separated list of fields to limit the response to. Verified live, e.g. `_fields=id,slug,link,title`.
+      schema:
+        type: string
+    embed:
+      name: _embed
+      in: query
+      description: Embed linked resources (author, featured media, terms) into the response.
+      schema:
+        type: boolean
+    include:
+      name: include
+      in: query
+      description: Limit result set to specific IDs.
+      schema:
+        type: array
+        items:
+          type: integer
+    exclude:
+      name: exclude
+      in: query
+      description: Ensure result set excludes specific IDs.
+      schema:
+        type: array
+        items:
+          type: integer
+    offset:
+      name: offset
+      in: query
+      description: Offset the result set by a specific number of items.
+      schema:
+        type: integer
+    slugParam:
+      name: slug
+      in: query
+      description: Limit results to items with one of the given slugs.
+      schema:
+        type: array
+        items:
+          type: string
+  responses:
+    NotFound:
+      description: The requested object does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: rest_post_invalid_id
+            message: Invalid post ID.
+            data:
+              status: 404
+    InvalidParam:
+      description: One or more query parameters failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: rest_invalid_param
+            message: 'Invalid parameter(s): per_page'
+            data:
+              status: 400
+              params:
+                per_page: per_page must be between 1 (inclusive) and 100 (inclusive)
+    Unauthorized:
+      description: 'The route exists but requires authentication. Verified live: anonymous requests to
+        privileged routes return this envelope with HTTP 401.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: rest_forbidden
+            message: Sorry, you are not allowed to do that.
+            data:
+              status: 401
+  schemas:
+    YoastHead:
+      type: object
+      description: Yoast SEO head payload for a URL. Field set observed live on 2026-08-04.
+      properties:
+        json:
+          type: object
+          additionalProperties: true
+          description: 'Structured SEO metadata: title, description, canonical, og_*, twitter_*, and the
+            JSON-LD `schema` graph.'
+        html:
+          type: string
+          description: The rendered `<head>` SEO markup as an HTML string.
+    Error:
+      type: object
+      description: The WordPress REST error envelope, verified live against cresilon.com. Note this is
+        NOT RFC 9457 application/problem+json — it is served as application/json with a WordPress-specific
+        shape.
+      properties:
+        code:
+          type: string
+          description: Machine-readable WordPress error code, e.g. `rest_post_invalid_id`.
+        message:
+          type: string
+          description: Human-readable message.
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+              description: HTTP status code, repeated in the body.
+            params:
+              type: object
+              additionalProperties:
+                type: string
+            details:
+              type: object
+              additionalProperties: true
+          required:
+          - status
+      required:
+      - code
+      - message
+      - data

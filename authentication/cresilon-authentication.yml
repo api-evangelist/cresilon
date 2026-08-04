@@ -1,0 +1,140 @@
+generated: '2026-08-04'
+method: derived
+source: live anonymous probes of https://cresilon.com/wp-json/ (2026-08-04)
+summary:
+  types:
+  - none
+  - cookie
+  - basic
+  api_key_in: []
+  oauth2_flows: []
+  notes: >-
+    Cresilon is a biotechnology and medical-device manufacturer. It publishes no developer
+    program, no API documentation and no product API. Its only machine-readable surface is the
+    platform-provided WordPress REST API at /wp-json/, and the read half of that surface is fully
+    public: every operation documented in this repo's openapi/ specs was verified to return HTTP
+    200 with JSON to an anonymous request carrying no credentials of any kind. There is no API
+    key, no OAuth, no developer signup, and no rate-limit or quota signalling observed. Unlike
+    most WordPress deployments in this catalog, the root index DOES advertise an authentication
+    method — WordPress Application Passwords, with an authorization endpoint at
+    https://cresilon.com/wp-admin/authorize-application.php. That is an administrative credential
+    for a site user, not a public developer credential, and the pipeline did not and will not
+    attempt to obtain one. Write operations (POST/PUT/PATCH/DELETE) are registered on the same
+    routes but reject anonymous callers with HTTP 401; they require a logged-in WordPress session
+    cookie plus an X-WP-Nonce header, or an Application Password over HTTP Basic. Those write
+    operations are deliberately NOT documented in the openapi/ specs, which describe only the
+    anonymously reachable read surface.
+schemes:
+- name: public-read
+  type: none
+  description: >-
+    Anonymous public read access to the WordPress content API — posts, pages, media, categories,
+    tags, comments, authors, search, oEmbed, the Yoast SEO head endpoint, and the
+    type/taxonomy/status registries.
+  evidence: >-
+    GET /wp-json/wp/v2/posts?per_page=1 returned 200 with post JSON and X-WP-Total: 36; the same
+    anonymous request pattern returned 200 on pages (53), media (1307), categories (2), tags (4),
+    users (1), comments (0), search, types, taxonomies, statuses, oembed/1.0/embed and
+    yoast/v1/get_head.
+- name: wordpress-cookie-nonce
+  type: cookie
+  in: cookie
+  description: >-
+    WordPress core cookie authentication paired with an X-WP-Nonce request header, required for
+    the write half of the same routes and for the administrative read routes. Not a public
+    developer credential — it belongs to a logged-in site user.
+  evidence: >-
+    Access-Control-Allow-Headers on /wp-json/wp/v2/posts advertises `Authorization, X-WP-Nonce,
+    Content-Disposition, Content-MD5, Content-Type`.
+- name: application-passwords
+  type: http
+  scheme: basic
+  description: >-
+    WordPress Application Passwords over HTTP Basic. This is the ONLY authentication method the
+    site advertises in its REST root index, and it is an administrative credential issued to an
+    existing WordPress user — there is no self-service developer signup behind it.
+  authorization_endpoint: https://cresilon.com/wp-admin/authorize-application.php
+  evidence: >-
+    The root index at https://cresilon.com/wp-json/ returns
+    `"authentication": {"application-passwords": {"endpoints": {"authorization":
+    "https://cresilon.com/wp-admin/authorize-application.php"}}}`.
+  public_credential: false
+site_member_area:
+  description: >-
+    Separate from the REST surface, cresilon.com runs a human-facing member area (WordPress
+    Download Manager) gating TRAUMAGEL and VETIGEL resource downloads. It is a web login, not an
+    API credential, and no REST route exposes it anonymously.
+  register: https://cresilon.com/register/
+  login: https://cresilon.com/login/
+  account: https://cresilon.com/account/
+  distributor_portal:
+    url: https://cresilon.com/distributor-portal/
+    gate: WordPress page password (verified live — the page renders a single password prompt)
+  evidence: >-
+    GET /register/ returned 200 with a real registration form (10 inputs); GET /login/ returned
+    200 with a real login form; GET /distributor-portal/ returned 200 with "This content is
+    password-protected."
+gated_surface:
+  description: >-
+    Routes present in the live route table but NOT anonymously readable. Recorded so the
+    public/private split of this surface is explicit rather than inferred.
+  routes:
+  - path: /wp/v2/settings
+    status: 401
+    code: rest_forbidden
+  - path: /wp/v2/themes
+    status: 401
+    code: rest_cannot_view_themes
+  - path: /wp/v2/plugins
+    status: 401
+    code: rest_cannot_view_plugins
+  - path: /wp/v2/menus
+    status: 401
+    code: rest_cannot_view
+  - path: /wp/v2/menu-items
+    status: 401
+    code: rest_cannot_view
+  - path: /wp/v2/block-types
+    status: 401
+    code: rest_block_type_cannot_view
+  - path: /wp/v2/templates
+    status: 401
+    code: rest_cannot_manage_templates
+  - path: /wp/v2/template-parts
+    status: 401
+    code: rest_cannot_manage_templates
+  - path: /wp/v2/pattern-directory/patterns
+    status: 401
+    code: rest_pattern_directory_cannot_view
+  - path: /wp/v2/font-families
+    status: 401
+    code: rest_cannot_read
+  - path: /wp/v2/posts/{id}/revisions
+    status: 401
+    code: rest_cannot_read
+  - path: /oembed/1.0/proxy
+    status: 401
+    code: rest_forbidden
+  - path: /jetpack/v4/site
+    status: 401
+    code: invalid_user_permission_view_admin
+  - path: /wp-abilities/v1/abilities
+    status: 401
+    code: rest_forbidden
+  - path: /wp-site-health/v1/tests/background-updates
+    status: 401
+notable_difference_from_catalog_norm: >-
+  On most WordPress sites in this catalog /wp/v2/users returns 401 (rest_user_cannot_view). On
+  cresilon.com it returns 200 with a single author record (id 211412379, slug `cresilon`), so the
+  numeric `author` field on every post IS publicly resolvable here.
+docs: https://developer.wordpress.org/rest-api/using-the-rest-api/authentication/
+x-evidence:
+  fetched: '2026-08-04'
+  host: https://cresilon.com
+  root_index: https://cresilon.com/wp-json/
+  namespaces: 45
+  routes_advertised: 1021
+  authentication_field:
+    application-passwords:
+      endpoints:
+        authorization: https://cresilon.com/wp-admin/authorize-application.php

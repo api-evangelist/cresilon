@@ -1,0 +1,65 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Cresilon News & Press Releases API
+  version: 1.0.0
+extends: openapi/cresilon-posts-api-openapi.yml
+x-apis-io-provenance:
+  method: generated
+  generated: '2026-08-04'
+  source: openapi/cresilon-posts-api-openapi.yml
+  note: Captures the API Evangelist enrichment layer applied on top of the derived contract for the Cresilon
+    WordPress REST surface. The underlying openapi/ document is itself derived from the live route index
+    at https://cresilon.com/wp-json/; this overlay records our catalog metadata and consumption guidance
+    separately so the derived contract stays clean.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: cresilon
+    x-apievangelist-provider-name: Cresilon
+    x-apievangelist-industry: Biotechnology / Medical Devices
+    x-apievangelist-surface-class: incidental-cms
+    x-apievangelist-note: Cresilon is a Brooklyn biotechnology and medical-device manufacturer (TRAUMAGEL,
+      VETIGEL) with no developer program. This is the WordPress content API behind its corporate site,
+      publicly readable but entirely unmanaged by the provider — no versioning policy, no deprecation
+      policy, no status page, no changelog and no support channel for API consumers. It carries marketing
+      and press content only; it is not a clinical, regulatory, ordering or distribution interface and
+      must not be treated as one.
+- target: $.info
+  update:
+    x-apievangelist-artifacts:
+      authentication: authentication/cresilon-authentication.yml
+      conventions: conventions/cresilon-conventions.yml
+      errors: errors/cresilon-problem-types.yml
+      lifecycle: lifecycle/cresilon-lifecycle.yml
+      conformance: conformance/cresilon-conformance.yml
+      data_model: data-model/cresilon-data-model.yml
+      well_known: well-known/cresilon-well-known.yml
+      examples: examples/cresilon-examples.yml
+      skills: skills/_index.yml
+      mcp: mcp/cresilon-mcp.yml
+      tool_crosswalk: mcp/cresilon-tool-crosswalk.yml
+      agentic_access: agentic-access/cresilon-agentic-access.yml
+      domain_security: security/cresilon-domain-security.yml
+- target: $.tags[?(@.name=='Posts')]
+  update:
+    x-apievangelist-tag-summary: Cresilon corporate news and press releases — 36 posts at capture, spanning
+      2018 to July 2026.
+- target: $.tags[?(@.name=='Comments')]
+  update:
+    x-apievangelist-tag-summary: Site comments — anonymously readable and verified empty (0 items) at
+      capture.
+- target: $.info
+  update:
+    x-apievangelist-consumption-guidance: 'Authentication: none required for any documented operation
+      — send no Authorization header. Pagination: page/per_page with X-WP-Total, X-WP-TotalPages and an
+      RFC 8288 Link header; per_page is capped at 100 and 999 returns HTTP 400 rest_invalid_param. Caching:
+      NO Cache-Control, ETag or Last-Modified is returned, so conditional requests are unavailable and
+      there is no stated freshness window — poll conservatively. Rate limits: none signalled anywhere,
+      and robots.txt sets no crawl delay; self-throttle. Errors: the WordPress {code, message, data.status}
+      envelope, NOT RFC 9457, and capability failures come back as 401 rather than 403. Trim responses
+      with _fields (a single untrimmed page object measured 51 KB, dominated by yoast_head) and inline
+      relations with _embed.'
+- target: $.info
+  update:
+    x-apievangelist-surface-note: The `author` field is a single shared account on every post, so it carries
+      no editorial signal. Tagging is effectively unused — 4 tags across 34 untagged posts.

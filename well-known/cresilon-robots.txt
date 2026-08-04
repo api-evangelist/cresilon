@@ -1,0 +1,10 @@
+Sitemap: https://cresilon.com/sitemap.xml
+Sitemap: https://cresilon.com/news-sitemap.xml
+# START YOAST BLOCK
+# ---------------------------
+User-agent: *
+Disallow:
+
+Sitemap: https://cresilon.com/sitemap_index.xml
+# ---------------------------
+# END YOAST BLOCK

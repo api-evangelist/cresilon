@@ -1,0 +1,28 @@
+generated: '2026-08-04'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: cresilon.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Nov  2 09:01:27 2026 GMT
+  hsts: true
+  hsts_max_age: 31536000
+  hsts_include_subdomains: false
+  hsts_preload: false
+  note: >-
+    HSTS was re-probed by hand on 2026-08-04 and IS present — `strict-transport-security:
+    max-age=31536000` is returned on both https://cresilon.com/ and the wp-json API routes. The
+    automated pass recorded null; the observed header value above supersedes it.
+  api_host: true
+  api_note: >-
+    cresilon.com is also the API host — the WordPress REST surface is served from the same origin
+    at /wp-json/. No api./developer./docs./status./trust. subdomain exists (all failed to
+    resolve), so there is no second host to probe.
+domains:
+- domain: cresilon.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: quarantine

@@ -1,0 +1,209 @@
+generated: '2026-08-04'
+method: derived
+source: >-
+  openapi/cresilon-*-openapi.yml schemas and the id-reference fields observed in live responses
+  from https://cresilon.com/wp-json/ (2026-08-04)
+summary: >-
+  The entity graph behind the Cresilon content API. It is the stock WordPress content model —
+  posts, pages, attachments, terms and users, joined by bare integer id references rather than
+  embedded objects. Relationship cardinalities below were confirmed against live payloads, not
+  assumed from the WordPress schema. Cardinality counts are the observed collection sizes at
+  capture.
+identifiers:
+  scheme: bare-integer
+  detail: >-
+    All ids are unprefixed integers. There is no type discriminator in the id itself, and posts
+    and pages SHARE one numbering space — page id 17999 and post id 18107 come from the same
+    sequence. A caller holding only an id cannot tell which collection to query; the Search API's
+    `subtype` field is the only cheap disambiguator on this surface.
+  ranges_observed:
+    posts_and_pages: 183 - 18107
+    media: up to 16942 (site logo)
+    categories: [1, 1365]
+    tags: 1456 - 1459
+    users: 211412379
+  note: >-
+    The single user id (211412379) is drawn from a different, much larger space than the content
+    ids — a WordPress.com platform-wide account id rather than a site-local one.
+entities:
+- name: Post
+  rest_base: /wp/v2/posts
+  schema: openapi/cresilon-posts-api-openapi.yml#/components/schemas/Post
+  count_observed: 36
+  domain: Corporate news and press releases
+  key_fields: [id, slug, date, title, content, excerpt, link, author, featured_media, categories, tags]
+  detail: >-
+    Backs the News page at /media/ and the RSS feed at /feed/. Content spans FDA clearance
+    announcements, TRAUMAGEL and VETIGEL launches, clinical study results, conference
+    presentations and executive interviews.
+- name: Page
+  rest_base: /wp/v2/pages
+  schema: openapi/cresilon-pages-api-openapi.yml#/components/schemas/Page
+  count_observed: 53
+  domain: Static marketing, product, clinical and legal content
+  key_fields: [id, slug, title, content, link, parent, menu_order, author, featured_media]
+  detail: >-
+    Includes the two product pages (TRAUMAGEL, VETIGEL), the Instructions For Use pages
+    (/ifu-traumagel/, /ifu-vetigel/, /ifu/), Clinical Publications, Case Studies, Management,
+    Contact Us, the member-area pages (/login/, /register/, /account/, /cart/, /purchases/), the
+    password-gated /distributor-portal/, and the legal set (Terms of Use, Privacy Policy, Return
+    Policy, Standard Terms and Conditions of Sale).
+- name: MediaItem
+  rest_base: /wp/v2/media
+  schema: openapi/cresilon-media-api-openapi.yml#/components/schemas/MediaItem
+  count_observed: 1307
+  domain: Media library — images, documents, video assets
+  key_fields: [id, slug, title, source_url, mime_type, media_type, media_details, post, alt_text, filesize]
+  detail: >-
+    By far the largest collection. `media_details.sizes` carries the generated variants; the
+    original is at `source_url` under /wp-content/uploads/.
+- name: Term
+  rest_base: /wp/v2/categories, /wp/v2/tags
+  schema: openapi/cresilon-taxonomy-api-openapi.yml#/components/schemas/Term
+  count_observed: 6
+  domain: Content classification
+  key_fields: [id, name, slug, taxonomy, count, parent, link]
+  detail: >-
+    Two taxonomies. `category` holds 2 terms — News (id 1, slug `uncategorized`, 36 posts) and
+    Press Releases (id 1365, 0 posts). `post_tag` holds 4 terms — biotech, cresilon, fda
+    clearance, vetigel — each applied to exactly 2 posts. Tagging is effectively unused: 34 of 36
+    posts carry no tag.
+- name: User
+  rest_base: /wp/v2/users
+  schema: openapi/cresilon-discovery-api-openapi.yml#/components/schemas/User
+  count_observed: 1
+  domain: Publishing author
+  key_fields: [id, name, slug, link, avatar_urls]
+  detail: >-
+    A single shared account (`cresilon`, id 211412379). Every post resolves to it, so `author` is
+    a constant in practice and carries no editorial signal. Unusually for this catalog, the
+    collection IS anonymously readable here, so the reference is resolvable.
+- name: SearchResult
+  rest_base: /wp/v2/search
+  schema: openapi/cresilon-search-api-openapi.yml#/components/schemas/SearchResult
+  count_observed: 129
+  domain: Cross-content search projection
+  key_fields: [id, title, url, type, subtype]
+  detail: >-
+    Not a stored entity — a lightweight projection over Post and Page. Its `subtype` field is the
+    only in-band way to route an id to the right collection.
+relationships:
+- from: Post
+  to: User
+  type: belongs_to
+  via: author
+  cardinality: many-to-one
+  resolvable: true
+  detail: >-
+    `author` is an integer user id. Resolvable anonymously here via getUser — unlike most
+    WordPress sites in this catalog, where /wp/v2/users returns 401.
+- from: Post
+  to: MediaItem
+  type: has_one
+  via: featured_media
+  cardinality: many-to-one
+  optional: true
+  detail: >-
+    `featured_media` is an attachment id, or 0 when unset. Jetpack additionally flattens the
+    resolved URL onto the post as `jetpack_featured_media_url`, which saves the round trip.
+- from: Post
+  to: Term
+  type: has_many
+  via: categories
+  cardinality: many-to-many
+  detail: >-
+    Array of category term ids. Observed: every post carries category 1 (News).
+- from: Post
+  to: Term
+  type: has_many
+  via: tags
+  cardinality: many-to-many
+  detail: Array of tag term ids. Sparsely populated — only 2 posts per tag, 4 tags total.
+- from: Post
+  to: Comment
+  type: has_many
+  via: _links.replies
+  cardinality: one-to-many
+  detail: >-
+    Link relation only, no id array on the post. The comment collection is anonymously readable
+    and empty (0 items) at capture, so this edge is inert on this site.
+- from: Page
+  to: Page
+  type: belongs_to
+  via: parent
+  cardinality: many-to-one
+  optional: true
+  detail: Page hierarchy. `parent` is 0 for top-level pages.
+- from: Page
+  to: User
+  type: belongs_to
+  via: author
+  cardinality: many-to-one
+  resolvable: true
+- from: Page
+  to: MediaItem
+  type: has_one
+  via: featured_media
+  cardinality: many-to-one
+  optional: true
+- from: MediaItem
+  to: Post
+  type: belongs_to
+  via: post
+  cardinality: many-to-one
+  optional: true
+  detail: >-
+    The post or page the attachment was uploaded to; null for library items never attached.
+- from: MediaItem
+  to: User
+  type: belongs_to
+  via: author
+  cardinality: many-to-one
+- from: Term
+  to: Term
+  type: belongs_to
+  via: parent
+  cardinality: many-to-one
+  optional: true
+  detail: Categories only; `post_tag` is flat. Both observed categories are top-level (parent 0).
+- from: SearchResult
+  to: Post
+  type: projects
+  via: subtype == "post"
+  detail: Resolve with getPost using the returned id.
+- from: SearchResult
+  to: Page
+  type: projects
+  via: subtype == "page"
+  detail: Resolve with getPage using the returned id.
+traversal:
+  in_band:
+    links: >-
+      Every object carries `_links` with self, collection, about, author, wp:term, wp:attachment
+      and replies relations, plus a `curies` entry defining the wp: prefix. This is the intended
+      navigation affordance.
+    embedding: >-
+      `_embed=true` inlines author, wp:featuredmedia and wp:term under an `_embedded` key,
+      collapsing three of the relationships above into a single request. Strongly recommended —
+      it is the difference between one call and four per post.
+  cost_note: >-
+    Objects are large by default (a single page object measured 51 KB, dominated by `yoast_head`
+    and `yoast_head_json`). Combine `_embed` with `_fields` to avoid paying for the SEO payload
+    on every traversal.
+absent:
+  description: >-
+    Entities a consumer might expect from a medical-device manufacturer that DO NOT exist on this
+    surface. Recorded so their absence is explicit.
+  items:
+  - Product catalog / SKU / GTIN entity — the products are prose on two WordPress pages.
+  - Instructions For Use as structured data — IFU content is page HTML and PDF attachments only.
+  - Clinical publication / study entity — /publications/ is a single page, not a collection.
+  - Distributor, order, inventory or lot/batch entity — none exposed.
+  - Regulatory clearance entity (510(k) numbers, UDI/DI) — mentioned in prose, never as a field.
+render: null
+x-evidence:
+  fetched: '2026-08-04'
+  host: https://cresilon.com
+  method: >-
+    Every relationship above was confirmed against a live payload; none inferred from the
+    WordPress source alone.
