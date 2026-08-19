@@ -1,0 +1,182 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cresilon News & Press Releases Posts API",
+    "version": "wp/v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Posts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Cresilon news posts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cresilon.com/wp-json/wp/v2/posts",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page of the collection. Defaults to 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to be returned in the result set. Verified live: values outside 1-100 return HTTP 400 `rest_invalid_param`."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to those matching a string."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Order sort attribute ascending or descending."
+              },
+              {
+                "name": "orderby",
+                "value": "",
+                "type": "query",
+                "description": "Sort collection by object attribute."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+              },
+              {
+                "name": "_fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to limit the response to. Verified live, e.g. `_fields=id,slug,link,title`."
+              },
+              {
+                "name": "_embed",
+                "value": "",
+                "type": "query",
+                "description": "Embed linked resources (author, featured media, terms) into the response."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to specific IDs."
+              },
+              {
+                "name": "exclude",
+                "value": "",
+                "type": "query",
+                "description": "Ensure result set excludes specific IDs."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset the result set by a specific number of items."
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to items with one of the given slugs."
+              },
+              {
+                "name": "categories",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to posts assigned to the given category IDs (1 = News, 1365 = Press Releases)."
+              },
+              {
+                "name": "categories_exclude",
+                "value": "",
+                "type": "query",
+                "description": "Exclude posts assigned to the given category IDs."
+              },
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to posts assigned to the given tag IDs."
+              },
+              {
+                "name": "tags_exclude",
+                "value": "",
+                "type": "query",
+                "description": "Exclude posts assigned to the given tag IDs."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to posts published after a given ISO 8601 date."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to posts published before a given ISO 8601 date."
+              },
+              {
+                "name": "sticky",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to sticky posts."
+              }
+            ]
+          },
+          "docs": "Returns a paginated collection of published Cresilon news and press-release posts. Total item and page counts are returned in the X-WP-Total and X-WP-TotalPages response headers, and RFC 8288 `Link` headers carry `next` / `prev` relations. Verified live 2026-08-04: X-WP-Total: 36."
+        },
+        {
+          "info": {
+            "name": "Get a Cresilon news post",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cresilon.com/wp-json/wp/v2/posts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier for the object."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+              },
+              {
+                "name": "_fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to limit the response to. Verified live, e.g. `_fields=id,slug,link,title`."
+              },
+              {
+                "name": "_embed",
+                "value": "",
+                "type": "query",
+                "description": "Embed linked resources (author, featured media, terms) into the response."
+              }
+            ]
+          },
+          "docs": "Returns a single published news post by its numeric WordPress post ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,202 @@
+{
+  "item": [
+    {
+      "id": "c696bf46-5f52-49c8-b269-9db9896f445f",
+      "name": "oEmbed",
+      "description": {
+        "content": "oEmbed 1.0 rich metadata for Cresilon URLs.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "32264123-f718-4f08-a4ce-f1b6514d72e2",
+          "name": "Get oEmbed data for a Cresilon URL",
+          "request": {
+            "name": "Get oEmbed data for a Cresilon URL",
+            "description": {
+              "content": "oEmbed 1.0 provider endpoint for cresilon.com URLs. Returns embeddable rich metadata for news posts and site pages. Verified live 2026-08-04 in both JSON and XML.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oembed",
+                "1.0",
+                "embed"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "url",
+                  "value": "<uri>",
+                  "description": "(Required) The cresilon.com URL to retrieve embed information for."
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format."
+                },
+                {
+                  "disabled": false,
+                  "key": "maxwidth",
+                  "value": "600",
+                  "description": "Maximum width of the embed frame in pixels."
+                },
+                {
+                  "disabled": false,
+                  "key": "maxheight",
+                  "value": "<integer>",
+                  "description": "Maximum height of the embed frame in pixels."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e441bda6-a4b1-49f0-a7e3-c3e5eca64891",
+              "name": "oEmbed data for the requested URL.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oembed",
+                    "1.0",
+                    "embed"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<uri>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "maxwidth",
+                      "value": "600"
+                    },
+                    {
+                      "key": "maxheight",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"summary\": \"oEmbed for the Cresilon home page\",\n  \"externalValue\": \"https://cresilon.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fcresilon.com%2F\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6564f2f7-8ca3-4d1e-906d-4f0baf04ab3c",
+              "name": "The requested object does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oembed",
+                    "1.0",
+                    "embed"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<uri>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "maxwidth",
+                      "value": "600"
+                    },
+                    {
+                      "key": "maxheight",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"rest_post_invalid_id\",\n  \"message\": \"Invalid post ID.\",\n  \"data\": {\n    \"status\": 404\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://cresilon.com/wp-json",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8dcde47b-d9ab-44ae-98fa-f5543a4e9ee6",
+    "name": "Cresilon O Embed API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Cresilon publishes its corporate website (cresilon.com) on WordPress (WordPress.com Atomic hosting, nginx) with the core WordPress REST API enabled and anonymously readable. This specification was DERIVED by discovering the live route index at https://cresilon.com/wp-json/ and probing each route for anonymous access; only routes verified to return HTTP 200 without credentials are documented here as public operations. Write operations exist on the same routes but require authentication (WordPress cookie + X-WP-Nonce, or Application Passwords) and are not documented here; anonymous requests to them return HTTP 401. This is NOT a product API offered by Cresilon to customers — Cresilon is a biotechnology and medical-device manufacturer, not a software vendor. This is the content API of their marketing site, captured for discovery purposes. This document covers the oEmbed discovery route WordPress registers, which returns embeddable rich metadata (title, author, thumbnail, iframe HTML) for any cresilon.com news post or page. Note the sibling `/oembed/1.0/proxy` route exists but is NOT anonymously readable — it returns HTTP 401 — and is therefore not documented here.\n\nContact Support:\n Name: Cresilon\n Email: info@cresilon.com",
+      "type": "text/plain"
+    }
+  }
+}

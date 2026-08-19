@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cresilon News & Press Releases Comments API",
+    "version": "wp/v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Comments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List comments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cresilon.com/wp-json/wp/v2/comments",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page of the collection. Defaults to 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to be returned in the result set. Verified live: values outside 1-100 return HTTP 400 `rest_invalid_param`."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+              },
+              {
+                "name": "post",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to comments assigned to specific post IDs."
+              }
+            ]
+          },
+          "docs": "Returns approved comments across the site. Verified live 2026-08-04: the route is anonymously readable and the collection is empty (X-WP-Total: 0)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

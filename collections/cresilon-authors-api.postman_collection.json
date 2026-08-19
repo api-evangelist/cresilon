@@ -1,0 +1,391 @@
+{
+  "item": [
+    {
+      "id": "d1cf0683-d063-4d12-95d5-144879b0076e",
+      "name": "Authors",
+      "description": {
+        "content": "Published authors — 1 at time of capture.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bbf4db36-1e04-425e-8d0a-14672592eb4b",
+          "name": "List published authors",
+          "request": {
+            "name": "List published authors",
+            "description": {
+              "content": "Returns authors who have published content. Verified live 2026-08-04: anonymously readable, X-WP-Total: 1 (`cresilon`).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wp",
+                "v2",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Current page of the collection. Defaults to 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "10",
+                  "description": "Maximum number of items to be returned in the result set. Verified live: values outside 1-100 return HTTP 400 `rest_invalid_param`."
+                },
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "view",
+                  "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+                },
+                {
+                  "disabled": false,
+                  "key": "_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to limit the response to. Verified live, e.g. `_fields=id,slug,link,title`."
+                },
+                {
+                  "disabled": false,
+                  "key": "slug",
+                  "value": "<string>",
+                  "description": "Limit results to items with one of the given slugs."
+                },
+                {
+                  "disabled": false,
+                  "key": "slug",
+                  "value": "<string>",
+                  "description": "Limit results to items with one of the given slugs."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8da0e3e9-bdf0-43fe-ac26-378110acbd56",
+              "name": "A page of authors.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    },
+                    {
+                      "key": "context",
+                      "value": "view"
+                    },
+                    {
+                      "key": "_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Total number of items in the collection.",
+                  "key": "X-WP-Total",
+                  "value": "1"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 211412379,\n    \"name\": \"cresilon\",\n    \"slug\": \"cresilon\",\n    \"link\": \"https://cresilon.com/author/cresilon/\",\n    \"url\": \"string\",\n    \"description\": \"string\",\n    \"avatar_urls\": {\n      \"key_0\": \"string\"\n    },\n    \"meta\": {\n      \"key_0\": 5217,\n      \"key_1\": \"string\"\n    },\n    \"_links\": {\n      \"key_0\": 1265,\n      \"key_1\": 9060,\n      \"key_2\": 5024.109798895585\n    }\n  },\n  {\n    \"id\": 211412379,\n    \"name\": \"cresilon\",\n    \"slug\": \"cresilon\",\n    \"link\": \"https://cresilon.com/author/cresilon/\",\n    \"url\": \"string\",\n    \"description\": \"string\",\n    \"avatar_urls\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\",\n      \"key_3\": \"string\",\n      \"key_4\": \"string\"\n    },\n    \"meta\": {\n      \"key_0\": true,\n      \"key_1\": 6775.67558118192,\n      \"key_2\": 5628.148150800139\n    },\n    \"_links\": {\n      \"key_0\": \"string\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "964a8a5b-5534-470b-8967-c000e5ca21e1",
+              "name": "One or more query parameters failed validation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    },
+                    {
+                      "key": "context",
+                      "value": "view"
+                    },
+                    {
+                      "key": "_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"rest_invalid_param\",\n  \"message\": \"Invalid parameter(s): per_page\",\n  \"data\": {\n    \"status\": 400,\n    \"params\": {\n      \"per_page\": \"per_page must be between 1 (inclusive) and 100 (inclusive)\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3bc7b146-9d69-42fa-b0c0-8c196e442348",
+          "name": "Get a published author",
+          "request": {
+            "name": "Get a published author",
+            "description": {
+              "content": "Returns a single published author by numeric user ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wp",
+                "v2",
+                "users",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "view",
+                  "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Unique numeric identifier for the object."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ae9c56d8-f684-406b-8ee7-87af3ac32d12",
+              "name": "The requested author.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "context",
+                      "value": "view"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Unique numeric identifier for the object."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 211412379,\n  \"name\": \"cresilon\",\n  \"slug\": \"cresilon\",\n  \"link\": \"https://cresilon.com/author/cresilon/\",\n  \"url\": \"string\",\n  \"description\": \"string\",\n  \"avatar_urls\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": \"string\",\n    \"key_3\": \"string\"\n  },\n  \"meta\": {\n    \"key_0\": true\n  },\n  \"_links\": {\n    \"key_0\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3292818b-0112-4ac0-949a-91f30dd30c92",
+              "name": "The requested object does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "users",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "context",
+                      "value": "view"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Unique numeric identifier for the object."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"rest_post_invalid_id\",\n  \"message\": \"Invalid post ID.\",\n  \"data\": {\n    \"status\": 404\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://cresilon.com/wp-json",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "5eced9a5-df51-4782-867d-c5f8ad9e513d",
+    "name": "Cresilon Discovery Authors API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Cresilon publishes its corporate website (cresilon.com) on WordPress (WordPress.com Atomic hosting, nginx) with the core WordPress REST API enabled and anonymously readable. This specification was DERIVED by discovering the live route index at https://cresilon.com/wp-json/ and probing each route for anonymous access; only routes verified to return HTTP 200 without credentials are documented here as public operations. Write operations exist on the same routes but require authentication (WordPress cookie + X-WP-Nonce, or Application Passwords) and are not documented here; anonymous requests to them return HTTP 401. This is NOT a product API offered by Cresilon to customers — Cresilon is a biotechnology and medical-device manufacturer, not a software vendor. This is the content API of their marketing site, captured for discovery purposes. This document covers the route index and the metadata routes that make the whole Cresilon content surface machine-readable, plus the anonymously-readable authors collection. The route index is the single best entry point for an agent: it names the site, its timezone, its registered namespaces and every route with its arguments.\n\nContact Support:\n Name: Cresilon\n Email: info@cresilon.com",
+      "type": "text/plain"
+    }
+  }
+}

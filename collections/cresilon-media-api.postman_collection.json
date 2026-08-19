@@ -1,0 +1,557 @@
+{
+  "item": [
+    {
+      "id": "380ac791-4c7a-44cd-8313-d725cf474825",
+      "name": "Media",
+      "description": {
+        "content": "Media library attachments — images, documents and video assets.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "28f4dedd-dc91-4781-beba-09c0b7b7da69",
+          "name": "List media library items",
+          "request": {
+            "name": "List media library items",
+            "description": {
+              "content": "Returns a paginated collection of media library attachments behind cresilon.com — product photography, TRAUMAGEL and VETIGEL imagery, IFU and publication PDFs, video posters and press assets, with their generated size variants. Verified live 2026-08-04: X-WP-Total: 1307.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wp",
+                "v2",
+                "media"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Current page of the collection. Defaults to 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "10",
+                  "description": "Maximum number of items to be returned in the result set. Verified live: values outside 1-100 return HTTP 400 `rest_invalid_param`."
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Limit results to those matching a string."
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "desc",
+                  "description": "Order sort attribute ascending or descending."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderby",
+                  "value": "date",
+                  "description": "Sort collection by object attribute."
+                },
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "view",
+                  "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+                },
+                {
+                  "disabled": false,
+                  "key": "_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to limit the response to. Verified live, e.g. `_fields=id,slug,link,title`."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<integer>",
+                  "description": "Limit result set to specific IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<integer>",
+                  "description": "Limit result set to specific IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude",
+                  "value": "<integer>",
+                  "description": "Ensure result set excludes specific IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude",
+                  "value": "<integer>",
+                  "description": "Ensure result set excludes specific IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "Offset the result set by a specific number of items."
+                },
+                {
+                  "disabled": false,
+                  "key": "media_type",
+                  "value": "<string>",
+                  "description": "Limit results to attachments of a particular media type."
+                },
+                {
+                  "disabled": false,
+                  "key": "mime_type",
+                  "value": "<string>",
+                  "description": "Limit results to attachments of a particular MIME type."
+                },
+                {
+                  "disabled": false,
+                  "key": "parent",
+                  "value": "<integer>",
+                  "description": "Limit results to attachments of specific parent post IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "parent",
+                  "value": "<integer>",
+                  "description": "Limit results to attachments of specific parent post IDs."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "21bcbf1b-bb9e-4de4-b7a0-27ba4e41a1ba",
+              "name": "A page of media attachments.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "media"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "date"
+                    },
+                    {
+                      "key": "context",
+                      "value": "view"
+                    },
+                    {
+                      "key": "_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "media_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mime_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "parent",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "parent",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Total number of items in the collection.",
+                  "key": "X-WP-Total",
+                  "value": "1307"
+                },
+                {
+                  "disabled": false,
+                  "description": "Total number of pages in the collection at the current per_page.",
+                  "key": "X-WP-TotalPages",
+                  "value": "131"
+                },
+                {
+                  "disabled": false,
+                  "description": "RFC 8288 Link header carrying `next` and `prev` pagination relations.",
+                  "key": "Link",
+                  "value": "<https://cresilon.com/wp-json/wp/v2/media?per_page=10&page=2>; rel=\"next\""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"summary\": \"First page of media items\",\n  \"externalValue\": \"https://cresilon.com/wp-json/wp/v2/media?per_page=1\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0565f871-4019-4545-b753-c281531c1f26",
+              "name": "One or more query parameters failed validation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "media"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "date"
+                    },
+                    {
+                      "key": "context",
+                      "value": "view"
+                    },
+                    {
+                      "key": "_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "media_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mime_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "parent",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "parent",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"rest_invalid_param\",\n  \"message\": \"Invalid parameter(s): per_page\",\n  \"data\": {\n    \"status\": 400,\n    \"params\": {\n      \"per_page\": \"per_page must be between 1 (inclusive) and 100 (inclusive)\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "be48c424-bd54-4715-aac6-c8fe6cd46523",
+          "name": "Get a media library item",
+          "request": {
+            "name": "Get a media library item",
+            "description": {
+              "content": "Returns a single media attachment by its numeric WordPress attachment ID. Verified live: id 16942 is the site logo.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wp",
+                "v2",
+                "media",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "view",
+                  "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+                },
+                {
+                  "disabled": false,
+                  "key": "_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to limit the response to. Verified live, e.g. `_fields=id,slug,link,title`."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Unique numeric identifier for the object."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bdde08bb-b1f3-49b0-9f5b-0df40a51e43d",
+              "name": "The requested media item.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "media",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "context",
+                      "value": "view"
+                    },
+                    {
+                      "key": "_fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Unique numeric identifier for the object."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 4202,\n  \"slug\": \"string\",\n  \"type\": \"string\",\n  \"link\": \"https://cZMwabmtpJpuGapAiIpnevCuYAjmebYIL.zzguG4wzwOc9yPmtoastYX\",\n  \"title\": {\n    \"rendered\": \"string\"\n  },\n  \"source_url\": \"http://vfhsHQJxaqPVzHKlgrtPBOGEyWlYcFF.zoqU2xKdB,jUpk+DjPsEnb6.wHZCl\",\n  \"mime_type\": \"image/jpeg\",\n  \"date\": \"1983-03-30T14:01:09.923Z\",\n  \"date_gmt\": \"1969-07-23T12:33:14.689Z\",\n  \"guid\": {\n    \"rendered\": \"string\"\n  },\n  \"modified\": \"1986-10-13T00:56:19.031Z\",\n  \"modified_gmt\": \"1961-09-09T08:50:33.983Z\",\n  \"status\": \"string\",\n  \"author\": 8742,\n  \"comment_status\": \"string\",\n  \"ping_status\": \"string\",\n  \"template\": \"string\",\n  \"meta\": {\n    \"key_0\": \"string\",\n    \"key_1\": true,\n    \"key_2\": true,\n    \"key_3\": \"string\"\n  },\n  \"class_list\": [\n    \"string\",\n    \"string\"\n  ],\n  \"acf\": {\n    \"key_0\": 5644.007818441948\n  },\n  \"description\": {\n    \"rendered\": \"string\"\n  },\n  \"caption\": {\n    \"rendered\": \"string\"\n  },\n  \"alt_text\": \"string\",\n  \"media_type\": \"image\",\n  \"media_details\": {\n    \"key_0\": \"string\"\n  },\n  \"post\": null,\n  \"filename\": \"string\",\n  \"filesize\": 9492,\n  \"featured_media\": 8737,\n  \"jetpack_shortlink\": \"http://aWNJOoNewjyjmoeHxTZfqFIGNgBqbUa.xxnaUGdvtjJJz5igHOoRNE7kwKPFdsXy,5cNE611Qnm09L8BpkIAAiA\",\n  \"jetpack_likes_enabled\": true,\n  \"jetpack_sharing_enabled\": false,\n  \"_links\": {\n    \"key_0\": 9022\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "994843de-82a7-4bbc-9a6f-250bd5cbe70c",
+              "name": "The requested object does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "media",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "context",
+                      "value": "view"
+                    },
+                    {
+                      "key": "_fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Unique numeric identifier for the object."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"rest_post_invalid_id\",\n  \"message\": \"Invalid post ID.\",\n  \"data\": {\n    \"status\": 404\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://cresilon.com/wp-json",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1c7814d4-a776-414a-8f5c-a6e0456dfc61",
+    "name": "Cresilon Media API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Cresilon publishes its corporate website (cresilon.com) on WordPress (WordPress.com Atomic hosting, nginx) with the core WordPress REST API enabled and anonymously readable. This specification was DERIVED by discovering the live route index at https://cresilon.com/wp-json/ and probing each route for anonymous access; only routes verified to return HTTP 200 without credentials are documented here as public operations. Write operations exist on the same routes but require authentication (WordPress cookie + X-WP-Nonce, or Application Passwords) and are not documented here; anonymous requests to them return HTTP 401. This is NOT a product API offered by Cresilon to customers — Cresilon is a biotechnology and medical-device manufacturer, not a software vendor. This is the content API of their marketing site, captured for discovery purposes. This document covers the `attachment` type — product photography, TRAUMAGEL and VETIGEL imagery, Instructions For Use and clinical publication documents, video posters and press assets, each with the generated size variants WordPress produces. At time of capture the collection held 1,307 attachments.\n\nContact Support:\n Name: Cresilon\n Email: info@cresilon.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,19 +1,9 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Cresilon Taxonomy API
   version: wp/v2
   summary: Public read surface of the content taxonomy behind cresilon.com.
-  description: Cresilon publishes its corporate website (cresilon.com) on WordPress (WordPress.com Atomic
-    hosting, nginx) with the core WordPress REST API enabled and anonymously readable. This specification
-    was DERIVED by discovering the live route index at https://cresilon.com/wp-json/ and probing each
-    route for anonymous access; only routes verified to return HTTP 200 without credentials are documented
-    here as public operations. Write operations exist on the same routes but require authentication (WordPress
-    cookie + X-WP-Nonce, or Application Passwords) and are not documented here; anonymous requests to
-    them return HTTP 401. This is NOT a product API offered by Cresilon to customers — Cresilon is a biotechnology
-    and medical-device manufacturer, not a software vendor. This is the content API of their marketing
-    site, captured for discovery purposes. This document covers the `category` and `post_tag` taxonomies
-    that classify Cresilon's news stream. At time of capture there were 2 categories (News, Press Releases)
-    and 4 tags (biotech, cresilon, fda clearance, vetigel).
+  description: Cresilon publishes its corporate website (cresilon.com) on WordPress (WordPress.com Atomic hosting, nginx) with the core WordPress REST API enabled and anonymously readable. This specification was DERIVED by discovering the live route index at https://cresilon.com/wp-json/ and probing each route for anonymous access; only routes verified to return HTTP 200 without credentials are documented here as public operations. Write operations exist on the same routes but require authentication (WordPress cookie + X-WP-Nonce, or Application Passwords) and are not documented here; anonymous requests to them return HTTP 401. This is NOT a product API offered by Cresilon to customers — Cresilon is a biotechnology and medical-device manufacturer, not a software vendor. This is the content API of their marketing site, captured for discovery purposes. This document covers the `category` and `post_tag` taxonomies that classify Cresilon's news stream. At time of capture there were 2 categories (News, Press Releases) and 4 tags (biotech, cresilon, fda clearance, vetigel).
   contact:
     name: Cresilon
     url: https://cresilon.com/contact-us/
@@ -25,10 +15,7 @@ info:
     method: derived
     source: https://cresilon.com/wp-json/
     derived_on: '2026-08-04'
-    note: Routes enumerated from the live wp-json discovery document (1,021 routes across 45 namespaces);
-      every operation below was probed anonymously and returned HTTP 200. Schemas reflect the field set
-      observed in live responses on 2026-08-04, including the `acf` (Advanced Custom Fields), Jetpack
-      and `yoast_head_json` extensions this site adds. No fabricated operations or parameters.
+    note: Routes enumerated from the live wp-json discovery document (1,021 routes across 45 namespaces); every operation below was probed anonymously and returned HTTP 200. Schemas reflect the field set observed in live responses on 2026-08-04, including the `acf` (Advanced Custom Fields), Jetpack and `yoast_head_json` extensions this site adds. No fabricated operations or parameters.
 servers:
 - url: https://cresilon.com/wp-json
   description: Production
@@ -42,8 +29,7 @@ paths:
       - Taxonomy
       operationId: listCategories
       summary: List categories
-      description: 'Returns the `category` taxonomy terms. Verified live 2026-08-04: 2 terms — `News`
-        (id 1, slug `uncategorized`, 36 posts) and `Press Releases` (id 1365, 0 posts).'
+      description: 'Returns the `category` taxonomy terms. Verified live 2026-08-04: 2 terms — `News` (id 1, slug `uncategorized`, 36 posts) and `Press Releases` (id 1365, 0 posts).'
       parameters:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/perPage'
@@ -109,8 +95,7 @@ paths:
       - Taxonomy
       operationId: listTags
       summary: List tags
-      description: 'Returns the `post_tag` taxonomy terms. Verified live 2026-08-04: 4 terms — `biotech`,
-        `cresilon`, `fda clearance`, `vetigel`, each with 2 posts.'
+      description: 'Returns the `post_tag` taxonomy terms. Verified live 2026-08-04: 4 terms — `biotech`, `cresilon`, `fda clearance`, `vetigel`, each with 2 posts.'
       parameters:
       - $ref: '#/components/parameters/page'
       - $ref: '#/components/parameters/perPage'
@@ -172,13 +157,29 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   parameters:
-    id:
-      name: id
-      in: path
-      required: true
-      description: Unique numeric identifier for the object.
+    exclude:
+      name: exclude
+      in: query
+      description: Ensure result set excludes specific IDs.
+      schema:
+        type: array
+        items:
+          type: integer
+    search:
+      name: search
+      in: query
+      description: Limit results to those matching a string.
+      schema:
+        type: string
+    perPage:
+      name: per_page
+      in: query
+      description: 'Maximum number of items to be returned in the result set. Verified live: values outside 1-100 return HTTP 400 `rest_invalid_param`.'
       schema:
         type: integer
+        minimum: 1
+        maximum: 100
+        default: 10
     page:
       name: page
       in: query
@@ -187,22 +188,27 @@ components:
         type: integer
         minimum: 1
         default: 1
-    perPage:
-      name: per_page
-      in: query
-      description: 'Maximum number of items to be returned in the result set. Verified live: values outside
-        1-100 return HTTP 400 `rest_invalid_param`.'
+    id:
+      name: id
+      in: path
+      required: true
+      description: Unique numeric identifier for the object.
       schema:
         type: integer
-        minimum: 1
-        maximum: 100
-        default: 10
-    search:
-      name: search
+    fields:
+      name: _fields
       in: query
-      description: Limit results to those matching a string.
+      description: Comma-separated list of fields to limit the response to. Verified live, e.g. `_fields=id,slug,link,title`.
       schema:
         type: string
+    include:
+      name: include
+      in: query
+      description: Limit result set to specific IDs.
+      schema:
+        type: array
+        items:
+          type: integer
     order:
       name: order
       in: query
@@ -213,69 +219,6 @@ components:
         - asc
         - desc
         default: desc
-    orderby:
-      name: orderby
-      in: query
-      description: Sort collection by object attribute.
-      schema:
-        type: string
-        enum:
-        - author
-        - date
-        - id
-        - include
-        - modified
-        - parent
-        - relevance
-        - slug
-        - include_slugs
-        - title
-        default: date
-    context:
-      name: context
-      in: query
-      description: Scope under which the request is made; determines fields present in the response. Only
-        `view` and `embed` are available anonymously — `edit` returns HTTP 401.
-      schema:
-        type: string
-        enum:
-        - view
-        - embed
-        default: view
-    fields:
-      name: _fields
-      in: query
-      description: Comma-separated list of fields to limit the response to. Verified live, e.g. `_fields=id,slug,link,title`.
-      schema:
-        type: string
-    embed:
-      name: _embed
-      in: query
-      description: Embed linked resources (author, featured media, terms) into the response.
-      schema:
-        type: boolean
-    include:
-      name: include
-      in: query
-      description: Limit result set to specific IDs.
-      schema:
-        type: array
-        items:
-          type: integer
-    exclude:
-      name: exclude
-      in: query
-      description: Ensure result set excludes specific IDs.
-      schema:
-        type: array
-        items:
-          type: integer
-    offset:
-      name: offset
-      in: query
-      description: Offset the result set by a specific number of items.
-      schema:
-        type: integer
     slugParam:
       name: slug
       in: query
@@ -284,6 +227,16 @@ components:
         type: array
         items:
           type: string
+    context:
+      name: context
+      in: query
+      description: Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401.
+      schema:
+        type: string
+        enum:
+        - view
+        - embed
+        default: view
   responses:
     NotFound:
       description: The requested object does not exist.
@@ -309,23 +262,10 @@ components:
               status: 400
               params:
                 per_page: per_page must be between 1 (inclusive) and 100 (inclusive)
-    Unauthorized:
-      description: 'The route exists but requires authentication. Verified live: anonymous requests to
-        privileged routes return this envelope with HTTP 401.'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: rest_forbidden
-            message: Sorry, you are not allowed to do that.
-            data:
-              status: 401
   schemas:
     Term:
       type: object
-      description: A taxonomy term (category or tag) as returned anonymously. Field set observed live
-        on 2026-08-04.
+      description: A taxonomy term (category or tag) as returned anonymously. Field set observed live on 2026-08-04.
       properties:
         id:
           type: integer
@@ -374,9 +314,7 @@ components:
       - link
     Error:
       type: object
-      description: The WordPress REST error envelope, verified live against cresilon.com. Note this is
-        NOT RFC 9457 application/problem+json — it is served as application/json with a WordPress-specific
-        shape.
+      description: The WordPress REST error envelope, verified live against cresilon.com. Note this is NOT RFC 9457 application/problem+json — it is served as application/json with a WordPress-specific shape.
       properties:
         code:
           type: string
@@ -404,18 +342,13 @@ components:
       - message
       - data
   headers:
-    XWPTotal:
-      description: Total number of items in the collection.
-      schema:
-        type: integer
-      example: 2
     XWPTotalPages:
       description: Total number of pages in the collection at the current per_page.
       schema:
         type: integer
       example: 1
-    LinkPagination:
-      description: RFC 8288 Link header carrying `next` and `prev` pagination relations.
+    XWPTotal:
+      description: Total number of items in the collection.
       schema:
-        type: string
-      example: <https://cresilon.com/wp-json/wp/v2/tags?per_page=2&page=2>; rel="next"
+        type: integer
+      example: 2

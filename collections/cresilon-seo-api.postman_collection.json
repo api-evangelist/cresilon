@@ -1,0 +1,160 @@
+{
+  "item": [
+    {
+      "id": "36ceb1d9-507b-4e66-9e0b-8393543cde4e",
+      "name": "SEO",
+      "description": {
+        "content": "Rendered SEO head metadata and JSON-LD structured data.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4bd05bf3-19c8-4ba8-a54a-01346565a40b",
+          "name": "Get rendered SEO head metadata for a Cresilon URL",
+          "request": {
+            "name": "Get rendered SEO head metadata for a Cresilon URL",
+            "description": {
+              "content": "Yoast SEO head endpoint. Returns the rendered `<head>` SEO markup for any cresilon.com URL together with its structured JSON-LD `schema` graph (Organization, WebSite, WebPage, BreadcrumbList and Article nodes). Verified live 2026-08-04 against the home page and /our-story/.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "yoast",
+                "v1",
+                "get_head"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "url",
+                  "value": "<uri>",
+                  "description": "(Required) The cresilon.com URL to render SEO metadata for."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c3503b84-6f95-4732-9818-d40d60a8e070",
+              "name": "Rendered SEO head and its JSON-LD graph.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "yoast",
+                    "v1",
+                    "get_head"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<uri>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"summary\": \"SEO head for /our-story/\",\n  \"externalValue\": \"https://cresilon.com/wp-json/yoast/v1/get_head?url=https%3A%2F%2Fcresilon.com%2Four-story%2F\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d7bc225-0559-4636-ae3c-5011e2966f6e",
+              "name": "The requested object does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "yoast",
+                    "v1",
+                    "get_head"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<uri>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"rest_post_invalid_id\",\n  \"message\": \"Invalid post ID.\",\n  \"data\": {\n    \"status\": 404\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://cresilon.com/wp-json",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "20c348ca-1b2b-4876-89cb-6489b3b9269c",
+    "name": "Cresilon Metadata SEO API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Cresilon publishes its corporate website (cresilon.com) on WordPress (WordPress.com Atomic hosting, nginx) with the core WordPress REST API enabled and anonymously readable. This specification was DERIVED by discovering the live route index at https://cresilon.com/wp-json/ and probing each route for anonymous access; only routes verified to return HTTP 200 without credentials are documented here as public operations. Write operations exist on the same routes but require authentication (WordPress cookie + X-WP-Nonce, or Application Passwords) and are not documented here; anonymous requests to them return HTTP 401. This is NOT a product API offered by Cresilon to customers — Cresilon is a biotechnology and medical-device manufacturer, not a software vendor. This is the content API of their marketing site, captured for discovery purposes. This document covers the Yoast SEO `get_head` route, which returns the rendered SEO metadata and the JSON-LD schema graph for any cresilon.com URL. For an agent this is the cheapest structured description of a Cresilon page — organization identity, canonical URL, social cards and article metadata — without parsing the page HTML.\n\nContact Support:\n Name: Cresilon\n Email: info@cresilon.com",
+      "type": "text/plain"
+    }
+  }
+}

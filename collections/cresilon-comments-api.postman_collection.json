@@ -1,0 +1,222 @@
+{
+  "item": [
+    {
+      "id": "3a57c6d7-3d53-4b78-b7f0-ca012f622d50",
+      "name": "Comments",
+      "description": {
+        "content": "Site comments — anonymously readable, empty at capture.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "51b3d436-64ba-4e0d-846e-c5424c31bcc7",
+          "name": "List comments",
+          "request": {
+            "name": "List comments",
+            "description": {
+              "content": "Returns approved comments across the site. Verified live 2026-08-04: the route is anonymously readable and the collection is empty (X-WP-Total: 0).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wp",
+                "v2",
+                "comments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Current page of the collection. Defaults to 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "10",
+                  "description": "Maximum number of items to be returned in the result set. Verified live: values outside 1-100 return HTTP 400 `rest_invalid_param`."
+                },
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "view",
+                  "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+                },
+                {
+                  "disabled": false,
+                  "key": "post",
+                  "value": "<integer>",
+                  "description": "Limit results to comments assigned to specific post IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "post",
+                  "value": "<integer>",
+                  "description": "Limit results to comments assigned to specific post IDs."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "958eb4ec-9cdb-4d1b-9a54-1279b5a43882",
+              "name": "A page of comments (empty at time of capture).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    },
+                    {
+                      "key": "context",
+                      "value": "view"
+                    },
+                    {
+                      "key": "post",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "post",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Total number of items in the collection.",
+                  "key": "X-WP-Total",
+                  "value": "36"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 8446,\n    \"post\": 3542,\n    \"parent\": 6959,\n    \"author\": 1202,\n    \"author_name\": \"string\",\n    \"date\": \"1981-07-17T15:41:58.390Z\",\n    \"content\": {\n      \"rendered\": \"string\"\n    },\n    \"link\": \"https://cRKYcGGrBBXHUAVuXiiTGsMG.geylYJUltg.ec.Z0Im1YHYZu,J1\",\n    \"status\": \"string\",\n    \"type\": \"string\",\n    \"_links\": {\n      \"key_0\": true\n    }\n  },\n  {\n    \"id\": 6281,\n    \"post\": 4980,\n    \"parent\": 1621,\n    \"author\": 4167,\n    \"author_name\": \"string\",\n    \"date\": \"1958-04-22T11:40:43.258Z\",\n    \"content\": {\n      \"rendered\": \"string\"\n    },\n    \"link\": \"https://szBQh.yhJCTRt9bzABQP1IVOYYYcx5+c1KiqNnwfh9svv\",\n    \"status\": \"string\",\n    \"type\": \"string\",\n    \"_links\": {\n      \"key_0\": false,\n      \"key_1\": 9260.93879649182\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "84fbc7bd-85b7-4faa-a3e3-1c3d39717b12",
+              "name": "One or more query parameters failed validation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    },
+                    {
+                      "key": "context",
+                      "value": "view"
+                    },
+                    {
+                      "key": "post",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "post",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"rest_invalid_param\",\n  \"message\": \"Invalid parameter(s): per_page\",\n  \"data\": {\n    \"status\": 400,\n    \"params\": {\n      \"per_page\": \"per_page must be between 1 (inclusive) and 100 (inclusive)\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://cresilon.com/wp-json",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7d8f2423-e87d-441a-b369-50344ff666bc",
+    "name": "Cresilon News & Press Releases Comments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Cresilon publishes its corporate website (cresilon.com) on WordPress (WordPress.com Atomic hosting, nginx) with the core WordPress REST API enabled and anonymously readable. This specification was DERIVED by discovering the live route index at https://cresilon.com/wp-json/ and probing each route for anonymous access; only routes verified to return HTTP 200 without credentials are documented here as public operations. Write operations exist on the same routes but require authentication (WordPress cookie + X-WP-Nonce, or Application Passwords) and are not documented here; anonymous requests to them return HTTP 401. This is NOT a product API offered by Cresilon to customers — Cresilon is a biotechnology and medical-device manufacturer, not a software vendor. This is the content API of their marketing site, captured for discovery purposes. This document covers the `post` type, which backs Cresilon's news and press-release stream — FDA clearance announcements, TRAUMAGEL and VETIGEL launch news, clinical study results, conference presentations and executive interviews. At time of capture the collection held 36 published posts (observed in the X-WP-Total response header), spanning 2018 to July 2026.\n\nContact Support:\n Name: Cresilon\n Email: info@cresilon.com",
+      "type": "text/plain"
+    }
+  }
+}

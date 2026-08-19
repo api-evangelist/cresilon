@@ -1,0 +1,226 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cresilon Taxonomy API",
+    "version": "wp/v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Taxonomy",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cresilon.com/wp-json/wp/v2/categories",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page of the collection. Defaults to 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to be returned in the result set. Verified live: values outside 1-100 return HTTP 400 `rest_invalid_param`."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to those matching a string."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Order sort attribute ascending or descending."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+              },
+              {
+                "name": "_fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to limit the response to. Verified live, e.g. `_fields=id,slug,link,title`."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to specific IDs."
+              },
+              {
+                "name": "exclude",
+                "value": "",
+                "type": "query",
+                "description": "Ensure result set excludes specific IDs."
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to items with one of the given slugs."
+              },
+              {
+                "name": "hide_empty",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide terms not assigned to any posts."
+              },
+              {
+                "name": "post",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to terms assigned to a specific post."
+              }
+            ]
+          },
+          "docs": "Returns the `category` taxonomy terms. Verified live 2026-08-04: 2 terms — `News` (id 1, slug `uncategorized`, 36 posts) and `Press Releases` (id 1365, 0 posts)."
+        },
+        {
+          "info": {
+            "name": "Get a category",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cresilon.com/wp-json/wp/v2/categories/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier for the object."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+              }
+            ]
+          },
+          "docs": "Returns a single category term by ID."
+        },
+        {
+          "info": {
+            "name": "List tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cresilon.com/wp-json/wp/v2/tags",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page of the collection. Defaults to 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to be returned in the result set. Verified live: values outside 1-100 return HTTP 400 `rest_invalid_param`."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to those matching a string."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Order sort attribute ascending or descending."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+              },
+              {
+                "name": "_fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to limit the response to. Verified live, e.g. `_fields=id,slug,link,title`."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to specific IDs."
+              },
+              {
+                "name": "exclude",
+                "value": "",
+                "type": "query",
+                "description": "Ensure result set excludes specific IDs."
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to items with one of the given slugs."
+              },
+              {
+                "name": "hide_empty",
+                "value": "",
+                "type": "query",
+                "description": "Whether to hide terms not assigned to any posts."
+              },
+              {
+                "name": "post",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to terms assigned to a specific post."
+              }
+            ]
+          },
+          "docs": "Returns the `post_tag` taxonomy terms. Verified live 2026-08-04: 4 terms — `biotech`, `cresilon`, `fda clearance`, `vetigel`, each with 2 posts."
+        },
+        {
+          "info": {
+            "name": "Get a tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cresilon.com/wp-json/wp/v2/tags/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier for the object."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+              }
+            ]
+          },
+          "docs": "Returns a single tag term by ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cresilon Discovery Authors API",
+    "version": "wp/v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List published authors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cresilon.com/wp-json/wp/v2/users",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page of the collection. Defaults to 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to be returned in the result set. Verified live: values outside 1-100 return HTTP 400 `rest_invalid_param`."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+              },
+              {
+                "name": "_fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to limit the response to. Verified live, e.g. `_fields=id,slug,link,title`."
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to items with one of the given slugs."
+              }
+            ]
+          },
+          "docs": "Returns authors who have published content. Verified live 2026-08-04: anonymously readable, X-WP-Total: 1 (`cresilon`)."
+        },
+        {
+          "info": {
+            "name": "Get a published author",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cresilon.com/wp-json/wp/v2/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier for the object."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+              }
+            ]
+          },
+          "docs": "Returns a single published author by numeric user ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

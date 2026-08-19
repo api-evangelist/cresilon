@@ -1,0 +1,162 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cresilon Discovery API",
+    "version": "wp/v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Discovery",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the WordPress REST route index",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cresilon.com/wp-json/",
+            "params": [
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "Limit the index to a single namespace, e.g. `wp/v2`."
+              },
+              {
+                "name": "_fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to limit the response to. Verified live, e.g. `_fields=id,slug,link,title`."
+              }
+            ]
+          },
+          "docs": "Returns the self-describing API index for cresilon.com — site name, description, URL, timezone offset, the full list of registered namespaces and every route with its methods, args and endpoint metadata. Verified live 2026-08-04: 45 namespaces and 1,021 routes; `authentication` advertises WordPress Application Passwords with the authorization endpoint at https://cresilon.com/wp-admin/authorize-application.php."
+        },
+        {
+          "info": {
+            "name": "List registered content types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cresilon.com/wp-json/wp/v2/types",
+            "params": [
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+              }
+            ]
+          },
+          "docs": "Returns every registered post type with its REST base, taxonomies, supports map and capability hints."
+        },
+        {
+          "info": {
+            "name": "Get a content type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cresilon.com/wp-json/wp/v2/types/:type",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "path",
+                "description": "Post type slug."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+              }
+            ]
+          },
+          "docs": "Returns a single registered post type by slug, e.g. `post`, `page`, `attachment`."
+        },
+        {
+          "info": {
+            "name": "List registered taxonomies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cresilon.com/wp-json/wp/v2/taxonomies",
+            "params": [
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to taxonomies associated with a post type."
+              }
+            ]
+          },
+          "docs": "Returns every registered taxonomy with its REST base and the post types it applies to."
+        },
+        {
+          "info": {
+            "name": "Get a taxonomy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cresilon.com/wp-json/wp/v2/taxonomies/:taxonomy",
+            "params": [
+              {
+                "name": "taxonomy",
+                "value": "",
+                "type": "path",
+                "description": "Taxonomy slug."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+              }
+            ]
+          },
+          "docs": "Returns a single registered taxonomy by slug, e.g. `category`, `post_tag`."
+        },
+        {
+          "info": {
+            "name": "List publication statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cresilon.com/wp-json/wp/v2/statuses",
+            "params": [
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+              }
+            ]
+          },
+          "docs": "Returns the publication statuses visible anonymously — `publish` only."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

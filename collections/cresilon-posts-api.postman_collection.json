@@ -1,0 +1,711 @@
+{
+  "item": [
+    {
+      "id": "70c8746e-0655-4b07-9eb8-900c87bc8987",
+      "name": "Posts",
+      "description": {
+        "content": "Cresilon corporate news and press releases.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6da44b01-5d60-409d-a39c-f7cc024979ea",
+          "name": "List Cresilon news posts",
+          "request": {
+            "name": "List Cresilon news posts",
+            "description": {
+              "content": "Returns a paginated collection of published Cresilon news and press-release posts. Total item and page counts are returned in the X-WP-Total and X-WP-TotalPages response headers, and RFC 8288 `Link` headers carry `next` / `prev` relations. Verified live 2026-08-04: X-WP-Total: 36.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wp",
+                "v2",
+                "posts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Current page of the collection. Defaults to 1."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "10",
+                  "description": "Maximum number of items to be returned in the result set. Verified live: values outside 1-100 return HTTP 400 `rest_invalid_param`."
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Limit results to those matching a string."
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "desc",
+                  "description": "Order sort attribute ascending or descending."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderby",
+                  "value": "date",
+                  "description": "Sort collection by object attribute."
+                },
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "view",
+                  "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+                },
+                {
+                  "disabled": false,
+                  "key": "_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to limit the response to. Verified live, e.g. `_fields=id,slug,link,title`."
+                },
+                {
+                  "disabled": false,
+                  "key": "_embed",
+                  "value": "<boolean>",
+                  "description": "Embed linked resources (author, featured media, terms) into the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<integer>",
+                  "description": "Limit result set to specific IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<integer>",
+                  "description": "Limit result set to specific IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude",
+                  "value": "<integer>",
+                  "description": "Ensure result set excludes specific IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude",
+                  "value": "<integer>",
+                  "description": "Ensure result set excludes specific IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "Offset the result set by a specific number of items."
+                },
+                {
+                  "disabled": false,
+                  "key": "slug",
+                  "value": "<string>",
+                  "description": "Limit results to items with one of the given slugs."
+                },
+                {
+                  "disabled": false,
+                  "key": "slug",
+                  "value": "<string>",
+                  "description": "Limit results to items with one of the given slugs."
+                },
+                {
+                  "disabled": false,
+                  "key": "categories",
+                  "value": "<integer>",
+                  "description": "Limit results to posts assigned to the given category IDs (1 = News, 1365 = Press Releases)."
+                },
+                {
+                  "disabled": false,
+                  "key": "categories",
+                  "value": "<integer>",
+                  "description": "Limit results to posts assigned to the given category IDs (1 = News, 1365 = Press Releases)."
+                },
+                {
+                  "disabled": false,
+                  "key": "categories_exclude",
+                  "value": "<integer>",
+                  "description": "Exclude posts assigned to the given category IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "categories_exclude",
+                  "value": "<integer>",
+                  "description": "Exclude posts assigned to the given category IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<integer>",
+                  "description": "Limit results to posts assigned to the given tag IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<integer>",
+                  "description": "Limit results to posts assigned to the given tag IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags_exclude",
+                  "value": "<integer>",
+                  "description": "Exclude posts assigned to the given tag IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags_exclude",
+                  "value": "<integer>",
+                  "description": "Exclude posts assigned to the given tag IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<dateTime>",
+                  "description": "Limit results to posts published after a given ISO 8601 date."
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<dateTime>",
+                  "description": "Limit results to posts published before a given ISO 8601 date."
+                },
+                {
+                  "disabled": false,
+                  "key": "sticky",
+                  "value": "<boolean>",
+                  "description": "Limit results to sticky posts."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f9f332ff-cf1f-47ff-98f6-e816c41be871",
+              "name": "A page of Cresilon news posts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "posts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "date"
+                    },
+                    {
+                      "key": "context",
+                      "value": "view"
+                    },
+                    {
+                      "key": "_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "_embed",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "categories",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "categories",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "categories_exclude",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "categories_exclude",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tags_exclude",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tags_exclude",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "sticky",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Total number of items in the collection.",
+                  "key": "X-WP-Total",
+                  "value": "36"
+                },
+                {
+                  "disabled": false,
+                  "description": "Total number of pages in the collection at the current per_page.",
+                  "key": "X-WP-TotalPages",
+                  "value": "18"
+                },
+                {
+                  "disabled": false,
+                  "description": "RFC 8288 Link header carrying `next` and `prev` pagination relations.",
+                  "key": "Link",
+                  "value": "<https://cresilon.com/wp-json/wp/v2/posts?per_page=2&page=2>; rel=\"next\""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"summary\": \"First page of Cresilon news posts\",\n  \"externalValue\": \"https://cresilon.com/wp-json/wp/v2/posts?per_page=1\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc2fdb97-dd5f-4b81-93ef-4e50e938b8eb",
+              "name": "One or more query parameters failed validation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "posts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "10"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "date"
+                    },
+                    {
+                      "key": "context",
+                      "value": "view"
+                    },
+                    {
+                      "key": "_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "_embed",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "categories",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "categories",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "categories_exclude",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "categories_exclude",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tags_exclude",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tags_exclude",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "sticky",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"rest_invalid_param\",\n  \"message\": \"Invalid parameter(s): per_page\",\n  \"data\": {\n    \"status\": 400,\n    \"params\": {\n      \"per_page\": \"per_page must be between 1 (inclusive) and 100 (inclusive)\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0c11b9a1-2bce-4952-b3b2-c00133626dc9",
+          "name": "Get a Cresilon news post",
+          "request": {
+            "name": "Get a Cresilon news post",
+            "description": {
+              "content": "Returns a single published news post by its numeric WordPress post ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wp",
+                "v2",
+                "posts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "context",
+                  "value": "view",
+                  "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+                },
+                {
+                  "disabled": false,
+                  "key": "_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to limit the response to. Verified live, e.g. `_fields=id,slug,link,title`."
+                },
+                {
+                  "disabled": false,
+                  "key": "_embed",
+                  "value": "<boolean>",
+                  "description": "Embed linked resources (author, featured media, terms) into the response."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Unique numeric identifier for the object."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9efe7b2c-106d-414c-9c12-75a48b7aeb8c",
+              "name": "The requested post.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "posts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "context",
+                      "value": "view"
+                    },
+                    {
+                      "key": "_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "_embed",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Unique numeric identifier for the object."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 964,\n  \"date\": \"1992-12-24T21:06:56.570Z\",\n  \"slug\": \"string\",\n  \"type\": \"string\",\n  \"link\": \"https://rXxxCqsMgpLxW.rkzprzSv1Hw3O-hPWg.OIMOitnlfKOoEleL+D-Fjk,\",\n  \"title\": {\n    \"rendered\": \"string\"\n  },\n  \"content\": {\n    \"rendered\": \"string\",\n    \"protected\": false\n  },\n  \"categories\": [\n    2761,\n    2300\n  ],\n  \"tags\": [\n    3978,\n    1344\n  ],\n  \"date_gmt\": \"1993-01-04T22:04:34.164Z\",\n  \"guid\": {\n    \"rendered\": \"string\"\n  },\n  \"modified\": \"1963-05-10T16:24:43.077Z\",\n  \"modified_gmt\": \"1992-08-13T04:05:09.675Z\",\n  \"status\": \"string\",\n  \"excerpt\": {\n    \"rendered\": \"string\",\n    \"protected\": true\n  },\n  \"author\": 7019,\n  \"featured_media\": 8763,\n  \"comment_status\": \"closed\",\n  \"ping_status\": \"closed\",\n  \"sticky\": true,\n  \"template\": \"string\",\n  \"format\": \"string\",\n  \"meta\": {\n    \"key_0\": true,\n    \"key_1\": 306.59288343409474,\n    \"key_2\": 4007.3744714205563,\n    \"key_3\": false\n  },\n  \"class_list\": [\n    \"string\",\n    \"string\"\n  ],\n  \"acf\": {\n    \"key_0\": 2549\n  },\n  \"jetpack_featured_media_url\": \"string\",\n  \"jetpack_shortlink\": \"https://cbhbqn.hpjqlQwv4qljV\",\n  \"jetpack_likes_enabled\": false,\n  \"jetpack_sharing_enabled\": false,\n  \"jetpack_publicize_connections\": [\n    {\n      \"key_0\": 401\n    },\n    {\n      \"key_0\": false,\n      \"key_1\": \"string\"\n    }\n  ],\n  \"yoast_head\": \"string\",\n  \"yoast_head_json\": {\n    \"key_0\": 5369.5149520406385,\n    \"key_1\": false,\n    \"key_2\": true\n  },\n  \"_links\": {\n    \"key_0\": \"string\",\n    \"key_1\": 6754,\n    \"key_2\": 4163\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "03b51502-f9e8-400a-b32f-04e5c59d882d",
+              "name": "The requested object does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wp",
+                    "v2",
+                    "posts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "context",
+                      "value": "view"
+                    },
+                    {
+                      "key": "_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "_embed",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Unique numeric identifier for the object."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"rest_post_invalid_id\",\n  \"message\": \"Invalid post ID.\",\n  \"data\": {\n    \"status\": 404\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://cresilon.com/wp-json",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1cc72229-da42-48c5-ad01-d3023c46a18d",
+    "name": "Cresilon News & Press Releases Posts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Cresilon publishes its corporate website (cresilon.com) on WordPress (WordPress.com Atomic hosting, nginx) with the core WordPress REST API enabled and anonymously readable. This specification was DERIVED by discovering the live route index at https://cresilon.com/wp-json/ and probing each route for anonymous access; only routes verified to return HTTP 200 without credentials are documented here as public operations. Write operations exist on the same routes but require authentication (WordPress cookie + X-WP-Nonce, or Application Passwords) and are not documented here; anonymous requests to them return HTTP 401. This is NOT a product API offered by Cresilon to customers — Cresilon is a biotechnology and medical-device manufacturer, not a software vendor. This is the content API of their marketing site, captured for discovery purposes. This document covers the `post` type, which backs Cresilon's news and press-release stream — FDA clearance announcements, TRAUMAGEL and VETIGEL launch news, clinical study results, conference presentations and executive interviews. At time of capture the collection held 36 published posts (observed in the X-WP-Total response header), spanning 2018 to July 2026.\n\nContact Support:\n Name: Cresilon\n Email: info@cresilon.com",
+      "type": "text/plain"
+    }
+  }
+}

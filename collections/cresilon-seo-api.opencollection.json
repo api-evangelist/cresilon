@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cresilon Metadata SEO API",
+    "version": "wp/v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SEO",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get rendered SEO head metadata for a Cresilon URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cresilon.com/wp-json/yoast/v1/get_head",
+            "params": [
+              {
+                "name": "url",
+                "value": "",
+                "type": "query",
+                "description": "The cresilon.com URL to render SEO metadata for."
+              }
+            ]
+          },
+          "docs": "Yoast SEO head endpoint. Returns the rendered `<head>` SEO markup for any cresilon.com URL together with its structured JSON-LD `schema` graph (Organization, WebSite, WebPage, BreadcrumbList and Article nodes). Verified live 2026-08-04 against the home page and /our-story/."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

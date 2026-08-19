@@ -2,11 +2,10 @@ generated: '2026-08-04'
 method: derived
 status: candidate
 source: openapi/cresilon-*-openapi.yml
-summary: >-
-  Cresilon publishes NO hosted or remote MCP server. This file is a DERIVED candidate tool list —
-  one tool per anonymously readable OpenAPI operation in this repo — recorded so the surface is
-  legible to agents and so a future first-party server has a starting shape. No `MCPServer`
-  pointer is wired in apis.yml, because there is no server to point at.
+summary: Cresilon publishes NO hosted or remote MCP server. This file is a DERIVED candidate tool list
+  — one tool per anonymously readable OpenAPI operation in this repo — recorded so the surface is legible
+  to agents and so a future first-party server has a starting shape. No `MCPServer` pointer is wired in
+  apis.yml, because there is no server to point at.
 search:
   performed: '2026-08-04'
   checked:
@@ -24,13 +23,11 @@ server:
   proposed:
     transport: http
     auth: none
-    note: >-
-      Every backing operation is anonymous GET, so a server built from this list needs no
-      credential and would be safe to expose read-only.
+    note: Every backing operation is anonymous GET, so a server built from this list needs no credential
+      and would be safe to expose read-only.
 tools:
 - name: search_cresilon
-  description: >-
-    Search Cresilon site content (news posts and pages) and return id, title, url and subtype.
+  description: Search Cresilon site content (news posts and pages) and return id, title, url and subtype.
     The correct entry point for resolving a product or clinical topic to a canonical URL.
   source_operation: openapi/cresilon-search-api-openapi.yml#searchContent
 - name: list_news
@@ -40,16 +37,14 @@ tools:
   description: Get one Cresilon news post by numeric ID, including full HTML content.
   source_operation: openapi/cresilon-posts-api-openapi.yml#getPost
 - name: list_pages
-  description: >-
-    List Cresilon site pages — product, Instructions For Use, publications, case studies,
-    management and legal pages. 53 available.
+  description: List Cresilon site pages — product, Instructions For Use, publications, case studies, management
+    and legal pages. 53 available.
   source_operation: openapi/cresilon-pages-api-openapi.yml#listPages
 - name: get_page
   description: Get one Cresilon site page by numeric ID, including full HTML content.
   source_operation: openapi/cresilon-pages-api-openapi.yml#getPage
 - name: list_media
-  description: >-
-    List media library attachments — product photography, IFU and publication documents, video
+  description: List media library attachments — product photography, IFU and publication documents, video
     posters, press assets. 1,307 available. Filterable by media_type and mime_type.
   source_operation: openapi/cresilon-media-api-openapi.yml#listMedia
 - name: get_media_item
@@ -68,13 +63,11 @@ tools:
   description: Get one tag term by ID.
   source_operation: openapi/cresilon-taxonomy-api-openapi.yml#getTag
 - name: list_comments
-  description: >-
-    List site comments. Verified empty (0 items) at capture — included for completeness only.
+  description: List site comments. Verified empty (0 items) at capture — included for completeness only.
   source_operation: openapi/cresilon-posts-api-openapi.yml#listComments
 - name: get_route_index
-  description: >-
-    Get the WordPress REST route index for cresilon.com — site name, timezone, 45 namespaces and
-    1,021 routes with their arguments. The self-describing entry point.
+  description: Get the WordPress REST route index for cresilon.com — site name, timezone, 45 namespaces
+    and 1,021 routes with their arguments. The self-describing entry point.
   source_operation: openapi/cresilon-discovery-api-openapi.yml#getRouteIndex
 - name: list_content_types
   description: List registered content types with their REST bases and taxonomies.
@@ -92,30 +85,33 @@ tools:
   description: List publication statuses visible anonymously (publish only).
   source_operation: openapi/cresilon-discovery-api-openapi.yml#listStatuses
 - name: list_authors
-  description: >-
-    List published authors. 1 available. Unusually for this catalog, the users collection IS
+  description: List published authors. 1 available. Unusually for this catalog, the users collection IS
     anonymously readable on cresilon.com.
   source_operation: openapi/cresilon-discovery-api-openapi.yml#listUsers
 - name: get_author
   description: Get one published author by numeric user ID.
   source_operation: openapi/cresilon-discovery-api-openapi.yml#getUser
 - name: get_oembed
-  description: >-
-    Get oEmbed 1.0 rich metadata (title, author, thumbnail, iframe HTML) for any cresilon.com URL.
+  description: Get oEmbed 1.0 rich metadata (title, author, thumbnail, iframe HTML) for any cresilon.com
+    URL.
   source_operation: openapi/cresilon-oembed-api-openapi.yml#getOEmbed
 - name: get_seo_metadata
-  description: >-
-    Get the rendered Yoast SEO head and its schema.org JSON-LD graph for any cresilon.com URL —
-    the cheapest structured description of a Cresilon page.
+  description: Get the rendered Yoast SEO head and its schema.org JSON-LD graph for any cresilon.com URL
+    — the cheapest structured description of a Cresilon page.
   source_operation: openapi/cresilon-seo-api-openapi.yml#getYoastHead
 guardrails:
   read_only: true
-  detail: >-
-    Every tool above is backed by an anonymous GET. No write, order, clinical or regulated
-    operation exists on this surface, and none should be added. Responses are marketing and press
-    content from a medical-device manufacturer — an agent must not present them as clinical
-    guidance, and must not infer product availability, indications or dosing from them.
+  detail: Every tool above is backed by an anonymous GET. No write, order, clinical or regulated operation
+    exists on this surface, and none should be added. Responses are marketing and press content from a
+    medical-device manufacturer — an agent must not present them as clinical guidance, and must not infer
+    product availability, indications or dosing from them.
 x-evidence:
   fetched: '2026-08-04'
   operations_bound: 22
   operations_total_in_repo: 22
+deployment:
+  mode: none
+  verified: derived
+  tools: 22
+  checked: '2026-08-12'
+  source: catalog MCP census

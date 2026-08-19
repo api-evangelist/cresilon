@@ -1,0 +1,152 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cresilon Pages API",
+    "version": "wp/v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Cresilon site pages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cresilon.com/wp-json/wp/v2/pages",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Current page of the collection. Defaults to 1."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to be returned in the result set. Verified live: values outside 1-100 return HTTP 400 `rest_invalid_param`."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to those matching a string."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Order sort attribute ascending or descending."
+              },
+              {
+                "name": "orderby",
+                "value": "",
+                "type": "query",
+                "description": "Sort collection by object attribute."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+              },
+              {
+                "name": "_fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to limit the response to. Verified live, e.g. `_fields=id,slug,link,title`."
+              },
+              {
+                "name": "_embed",
+                "value": "",
+                "type": "query",
+                "description": "Embed linked resources (author, featured media, terms) into the response."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Limit result set to specific IDs."
+              },
+              {
+                "name": "exclude",
+                "value": "",
+                "type": "query",
+                "description": "Ensure result set excludes specific IDs."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset the result set by a specific number of items."
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to items with one of the given slugs."
+              },
+              {
+                "name": "parent",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to pages with the given parent IDs."
+              },
+              {
+                "name": "menu_order",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to pages with a specific menu_order value."
+              }
+            ]
+          },
+          "docs": "Returns a paginated collection of published pages on cresilon.com — product pages (TRAUMAGEL, VETIGEL), Instructions For Use, clinical publications, case studies, management, media, distributor portal and legal pages. Verified live 2026-08-04: X-WP-Total: 53."
+        },
+        {
+          "info": {
+            "name": "Get a Cresilon site page",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cresilon.com/wp-json/wp/v2/pages/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Unique numeric identifier for the object."
+              },
+              {
+                "name": "context",
+                "value": "",
+                "type": "query",
+                "description": "Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401."
+              },
+              {
+                "name": "_fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to limit the response to. Verified live, e.g. `_fields=id,slug,link,title`."
+              },
+              {
+                "name": "_embed",
+                "value": "",
+                "type": "query",
+                "description": "Embed linked resources (author, featured media, terms) into the response."
+              }
+            ]
+          },
+          "docs": "Returns a single published page by its numeric WordPress page ID. Verified live: id 15982 is the cresilon.com home page."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cresilon O Embed API",
+    "version": "wp/v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "oEmbed",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get oEmbed data for a Cresilon URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://cresilon.com/wp-json/oembed/1.0/embed",
+            "params": [
+              {
+                "name": "url",
+                "value": "",
+                "type": "query",
+                "description": "The cresilon.com URL to retrieve embed information for."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format."
+              },
+              {
+                "name": "maxwidth",
+                "value": "",
+                "type": "query",
+                "description": "Maximum width of the embed frame in pixels."
+              },
+              {
+                "name": "maxheight",
+                "value": "",
+                "type": "query",
+                "description": "Maximum height of the embed frame in pixels."
+              }
+            ]
+          },
+          "docs": "oEmbed 1.0 provider endpoint for cresilon.com URLs. Returns embeddable rich metadata for news posts and site pages. Verified live 2026-08-04 in both JSON and XML."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

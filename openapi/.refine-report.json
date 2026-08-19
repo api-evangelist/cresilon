@@ -1,0 +1,44 @@
+{
+  "provider": "cresilon",
+  "sources": [
+    "cresilon-authors-api-openapi.yml",
+    "cresilon-comments-api-openapi.yml",
+    "cresilon-discovery-api-openapi.yml",
+    "cresilon-media-api-openapi.yml",
+    "cresilon-oembed-api-openapi.yml",
+    "cresilon-pages-api-openapi.yml",
+    "cresilon-posts-api-openapi.yml",
+    "cresilon-search-api-openapi.yml",
+    "cresilon-seo-api-openapi.yml",
+    "cresilon-taxonomy-api-openapi.yml"
+  ],
+  "outputs": [
+    "cresilon-authors-api-openapi.yml",
+    "cresilon-comments-api-openapi.yml",
+    "cresilon-discovery-api-openapi.yml",
+    "cresilon-media-api-openapi.yml",
+    "cresilon-oembed-api-openapi.yml",
+    "cresilon-pages-api-openapi.yml",
+    "cresilon-posts-api-openapi.yml",
+    "cresilon-search-api-openapi.yml",
+    "cresilon-seo-api-openapi.yml",
+    "cresilon-taxonomy-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "cresilon-authors-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "cresilon-comments-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "cresilon-discovery-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "cresilon-media-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "cresilon-oembed-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "cresilon-pages-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "cresilon-posts-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "cresilon-search-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "cresilon-seo-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "cresilon-taxonomy-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": []
+}
