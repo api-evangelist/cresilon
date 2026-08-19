@@ -34,7 +34,7 @@ x-source: harvest:secondary-market
 x-secondary-market-listing: https://forgeglobal.com/cresilon_stock/
 x-tier: stub
 x-tier-reason: harvest
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-08-04'
 modified: '2026-08-04'
 tags:
