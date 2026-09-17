@@ -227,29 +227,6 @@ apis:
     url: lifecycle/cresilon-lifecycle.yml
   - type: Overlay
     url: overlays/cresilon-discovery-api-overlay.yaml
-- aid: cresilon:cresilon-oembed-api
-  name: Cresilon oEmbed API
-  description: >-
-    Public oEmbed 1.0 provider endpoint for cresilon.com URLs, returning embeddable rich metadata for
-    Cresilon news posts and site pages in JSON or XML.
-  humanURL: https://cresilon.com/wp-json/
-  baseURL: https://cresilon.com/wp-json
-  tags:
-  - oEmbed
-  - Metadata
-  properties:
-  - type: OpenAPI
-    url: openapi/cresilon-oembed-api-openapi.yml
-  - type: Authentication
-    url: authentication/cresilon-authentication.yml
-  - type: ErrorCatalog
-    url: errors/cresilon-problem-types.yml
-  - type: Conventions
-    url: conventions/cresilon-conventions.yml
-  - type: Conformance
-    url: conformance/cresilon-conformance.yml
-  - type: Overlay
-    url: overlays/cresilon-oembed-api-overlay.yaml
 - aid: cresilon:cresilon-seo-api
   name: Cresilon SEO Metadata API
   description: >-
@@ -291,12 +268,32 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/cresilon-comments-api-openapi.yml
+- aid: cresilon:cresilon-o-embed-api
+  name: Cresilon o Embed API
+  description: oEmbed 1.0 rich metadata for Cresilon URLs.
+  humanURL: https://cresilon.com/wp-json/
+  baseURL: https://cresilon.com/wp-json
+  tags:
+  - o Embed
+  properties:
+  - type: OpenAPI
+    url: openapi/cresilon-o-embed-api-openapi.yml
+  - type: Authentication
+    url: authentication/cresilon-authentication.yml
+  - type: ErrorCatalog
+    url: errors/cresilon-problem-types.yml
+  - type: Conventions
+    url: conventions/cresilon-conventions.yml
+  - type: Conformance
+    url: conformance/cresilon-conformance.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/cresilon-oembed-api-overlay.yaml
 - type: X-MCPServerCandidate
   url: mcp/cresilon-mcp.yml
   note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
