@@ -274,6 +274,8 @@ apis:
   humanURL: https://cresilon.com/wp-json/
   baseURL: https://cresilon.com/wp-json
   tags:
+  - oEmbed
+  tags_raw:
   - o Embed
   properties:
   - type: OpenAPI
