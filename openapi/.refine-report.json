@@ -5,7 +5,7 @@
     "cresilon-comments-api-openapi.yml",
     "cresilon-discovery-api-openapi.yml",
     "cresilon-media-api-openapi.yml",
-    "cresilon-oembed-api-openapi.yml",
+    "cresilon-o-embed-api-openapi.yml",
     "cresilon-pages-api-openapi.yml",
     "cresilon-posts-api-openapi.yml",
     "cresilon-search-api-openapi.yml",
@@ -17,7 +17,7 @@
     "cresilon-comments-api-openapi.yml",
     "cresilon-discovery-api-openapi.yml",
     "cresilon-media-api-openapi.yml",
-    "cresilon-oembed-api-openapi.yml",
+    "cresilon-o-embed-api-openapi.yml",
     "cresilon-pages-api-openapi.yml",
     "cresilon-posts-api-openapi.yml",
     "cresilon-search-api-openapi.yml",
@@ -26,18 +26,10 @@
   ],
   "archived": [],
   "errors": [],
-  "warnings": [],
+  "warnings": [
+    "no openapi/_original/ archive: this run re-split PREVIOUSLY REFINED output, so any base URL it carries is inherited from an earlier pass rather than read from a document the provider published"
+  ],
   "notes": [
-    "cresilon-authors-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "cresilon-comments-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "cresilon-discovery-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "cresilon-media-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "cresilon-oembed-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "cresilon-pages-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "cresilon-posts-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "cresilon-search-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "cresilon-seo-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "cresilon-taxonomy-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
   "skipped": []

@@ -3,7 +3,7 @@ info:
   title: Cresilon Metadata SEO API
   version: wp/v2
   summary: Yoast SEO head and JSON-LD graph for any cresilon.com URL.
-  description: Cresilon publishes its corporate website (cresilon.com) on WordPress (WordPress.com Atomic hosting, nginx) with the core WordPress REST API enabled and anonymously readable. This specification was DERIVED by discovering the live route index at https://cresilon.com/wp-json/ and probing each route for anonymous access; only routes verified to return HTTP 200 without credentials are documented here as public operations. Write operations exist on the same routes but require authentication (WordPress cookie + X-WP-Nonce, or Application Passwords) and are not documented here; anonymous requests to them return HTTP 401. This is NOT a product API offered by Cresilon to customers — Cresilon is a biotechnology and medical-device manufacturer, not a software vendor. This is the content API of their marketing site, captured for discovery purposes. This document covers the Yoast SEO `get_head` route, which returns the rendered SEO metadata and the JSON-LD schema graph for any cresilon.com URL. For an agent this is the cheapest structured description of a Cresilon page — organization identity, canonical URL, social cards and article metadata — without parsing the page HTML.
+  description: Cresilon publishes its corporate website (cresilon.com) on WordPress (WordPress.com Atomic hosting, nginx) with the core WordPress REST API enabled and anonymously readable.
   contact:
     name: Cresilon
     url: https://cresilon.com/contact-us/
@@ -29,7 +29,7 @@ paths:
       - SEO
       operationId: getYoastHead
       summary: Get rendered SEO head metadata for a Cresilon URL
-      description: Yoast SEO head endpoint. Returns the rendered `<head>` SEO markup for any cresilon.com URL together with its structured JSON-LD `schema` graph (Organization, WebSite, WebPage, BreadcrumbList and Article nodes). Verified live 2026-08-04 against the home page and /our-story/.
+      description: Yoast SEO head endpoint. Returns the rendered `` SEO markup for any cresilon.com URL together with its structured JSON-LD `schema` graph (Organization, WebSite, WebPage, BreadcrumbList and Article nodes). Verified live 2026-08-04 against the home page and /our-story/.
       parameters:
       - name: url
         in: query
@@ -52,30 +52,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    NotFound:
-      description: The requested object does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: rest_post_invalid_id
-            message: Invalid post ID.
-            data:
-              status: 404
   schemas:
-    YoastHead:
-      type: object
-      description: Yoast SEO head payload for a URL. Field set observed live on 2026-08-04.
-      properties:
-        json:
-          type: object
-          additionalProperties: true
-          description: 'Structured SEO metadata: title, description, canonical, og_*, twitter_*, and the JSON-LD `schema` graph.'
-        html:
-          type: string
-          description: The rendered `<head>` SEO markup as an HTML string.
     Error:
       type: object
       description: The WordPress REST error envelope, verified live against cresilon.com. Note this is NOT RFC 9457 application/problem+json — it is served as application/json with a WordPress-specific shape.
@@ -105,3 +82,26 @@ components:
       - code
       - message
       - data
+    YoastHead:
+      type: object
+      description: Yoast SEO head payload for a URL. Field set observed live on 2026-08-04.
+      properties:
+        json:
+          type: object
+          additionalProperties: true
+          description: 'Structured SEO metadata: title, description, canonical, og_*, twitter_*, and the JSON-LD `schema` graph.'
+        html:
+          type: string
+          description: The rendered `<head>` SEO markup as an HTML string.
+  responses:
+    NotFound:
+      description: The requested object does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: rest_post_invalid_id
+            message: Invalid post ID.
+            data:
+              status: 404

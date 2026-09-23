@@ -3,7 +3,7 @@ info:
   title: Cresilon Discovery API
   version: wp/v2
   summary: Self-describing site, content-type, taxonomy, status and author metadata for cresilon.com.
-  description: 'Cresilon publishes its corporate website (cresilon.com) on WordPress (WordPress.com Atomic hosting, nginx) with the core WordPress REST API enabled and anonymously readable. This specification was DERIVED by discovering the live route index at https://cresilon.com/wp-json/ and probing each route for anonymous access; only routes verified to return HTTP 200 without credentials are documented here as public operations. Write operations exist on the same routes but require authentication (WordPress cookie + X-WP-Nonce, or Application Passwords) and are not documented here; anonymous requests to them return HTTP 401. This is NOT a product API offered by Cresilon to customers — Cresilon is a biotechnology and medical-device manufacturer, not a software vendor. This is the content API of their marketing site, captured for discovery purposes. This document covers the route index and the metadata routes that make the whole Cresilon content surface machine-readable, plus the anonymously-readable authors collection. The route index is the single best entry point for an agent: it names the site, its timezone, its registered namespaces and every route with its arguments.'
+  description: Cresilon publishes its corporate website (cresilon.com) on WordPress (WordPress.com Atomic hosting, nginx) with the core WordPress REST API enabled and anonymously readable.
   contact:
     name: Cresilon
     url: https://cresilon.com/contact-us/
@@ -156,18 +156,6 @@ paths:
                 type: object
                 additionalProperties: true
 components:
-  responses:
-    NotFound:
-      description: The requested object does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: rest_post_invalid_id
-            message: Invalid post ID.
-            data:
-              status: 404
   parameters:
     fields:
       name: _fields
@@ -186,35 +174,6 @@ components:
         - embed
         default: view
   schemas:
-    Error:
-      type: object
-      description: The WordPress REST error envelope, verified live against cresilon.com. Note this is NOT RFC 9457 application/problem+json — it is served as application/json with a WordPress-specific shape.
-      properties:
-        code:
-          type: string
-          description: Machine-readable WordPress error code, e.g. `rest_post_invalid_id`.
-        message:
-          type: string
-          description: Human-readable message.
-        data:
-          type: object
-          properties:
-            status:
-              type: integer
-              description: HTTP status code, repeated in the body.
-            params:
-              type: object
-              additionalProperties:
-                type: string
-            details:
-              type: object
-              additionalProperties: true
-          required:
-          - status
-      required:
-      - code
-      - message
-      - data
     RouteIndex:
       type: object
       description: The WordPress REST API self-description document served at the API root.
@@ -266,3 +225,44 @@ components:
       - url
       - namespaces
       - routes
+    Error:
+      type: object
+      description: The WordPress REST error envelope, verified live against cresilon.com. Note this is NOT RFC 9457 application/problem+json — it is served as application/json with a WordPress-specific shape.
+      properties:
+        code:
+          type: string
+          description: Machine-readable WordPress error code, e.g. `rest_post_invalid_id`.
+        message:
+          type: string
+          description: Human-readable message.
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+              description: HTTP status code, repeated in the body.
+            params:
+              type: object
+              additionalProperties:
+                type: string
+            details:
+              type: object
+              additionalProperties: true
+          required:
+          - status
+      required:
+      - code
+      - message
+      - data
+  responses:
+    NotFound:
+      description: The requested object does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: rest_post_invalid_id
+            message: Invalid post ID.
+            data:
+              status: 404

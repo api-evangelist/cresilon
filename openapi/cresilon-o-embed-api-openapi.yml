@@ -1,9 +1,9 @@
 openapi: 3.2.0
 info:
-  title: Cresilon O Embed API
+  title: Cresilon o Embed API
   version: wp/v2
   summary: oEmbed 1.0 provider endpoint for cresilon.com URLs.
-  description: Cresilon publishes its corporate website (cresilon.com) on WordPress (WordPress.com Atomic hosting, nginx) with the core WordPress REST API enabled and anonymously readable. This specification was DERIVED by discovering the live route index at https://cresilon.com/wp-json/ and probing each route for anonymous access; only routes verified to return HTTP 200 without credentials are documented here as public operations. Write operations exist on the same routes but require authentication (WordPress cookie + X-WP-Nonce, or Application Passwords) and are not documented here; anonymous requests to them return HTTP 401. This is NOT a product API offered by Cresilon to customers — Cresilon is a biotechnology and medical-device manufacturer, not a software vendor. This is the content API of their marketing site, captured for discovery purposes. This document covers the oEmbed discovery route WordPress registers, which returns embeddable rich metadata (title, author, thumbnail, iframe HTML) for any cresilon.com news post or page. Note the sibling `/oembed/1.0/proxy` route exists but is NOT anonymously readable — it returns HTTP 401 — and is therefore not documented here.
+  description: Cresilon publishes its corporate website (cresilon.com) on WordPress (WordPress.com Atomic hosting, nginx) with the core WordPress REST API enabled and anonymously readable.
   contact:
     name: Cresilon
     url: https://cresilon.com/contact-us/
@@ -20,13 +20,13 @@ servers:
 - url: https://cresilon.com/wp-json
   description: Production
 tags:
-- name: oEmbed
+- name: o Embed
   description: oEmbed 1.0 rich metadata for Cresilon URLs.
 paths:
   /oembed/1.0/embed:
     get:
       tags:
-      - oEmbed
+      - o Embed
       operationId: getOEmbed
       summary: Get oEmbed data for a Cresilon URL
       description: oEmbed 1.0 provider endpoint for cresilon.com URLs. Returns embeddable rich metadata for news posts and site pages. Verified live 2026-08-04 in both JSON and XML.
@@ -76,18 +76,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    NotFound:
-      description: The requested object does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: rest_post_invalid_id
-            message: Invalid post ID.
-            data:
-              status: 404
   schemas:
     OEmbedResponse:
       type: object
@@ -163,3 +151,15 @@ components:
       - code
       - message
       - data
+  responses:
+    NotFound:
+      description: The requested object does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: rest_post_invalid_id
+            message: Invalid post ID.
+            data:
+              status: 404

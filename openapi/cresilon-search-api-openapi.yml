@@ -3,7 +3,7 @@ info:
   title: Cresilon Search API
   version: wp/v2
   summary: Public cross-content search over cresilon.com posts and pages.
-  description: Cresilon publishes its corporate website (cresilon.com) on WordPress (WordPress.com Atomic hosting, nginx) with the core WordPress REST API enabled and anonymously readable. This specification was DERIVED by discovering the live route index at https://cresilon.com/wp-json/ and probing each route for anonymous access; only routes verified to return HTTP 200 without credentials are documented here as public operations. Write operations exist on the same routes but require authentication (WordPress cookie + X-WP-Nonce, or Application Passwords) and are not documented here; anonymous requests to them return HTTP 401. This is NOT a product API offered by Cresilon to customers — Cresilon is a biotechnology and medical-device manufacturer, not a software vendor. This is the content API of their marketing site, captured for discovery purposes. This document covers the WordPress core search route, which returns lightweight records spanning both the news stream and the static pages. It is the fastest way for an agent to resolve a Cresilon product or clinical topic to a canonical URL.
+  description: Cresilon publishes its corporate website (cresilon.com) on WordPress (WordPress.com Atomic hosting, nginx) with the core WordPress REST API enabled and anonymously readable.
   contact:
     name: Cresilon
     url: https://cresilon.com/contact-us/
@@ -83,11 +83,25 @@ paths:
         '400':
           $ref: '#/components/responses/InvalidParam'
 components:
+  responses:
+    InvalidParam:
+      description: One or more query parameters failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: rest_invalid_param
+            message: 'Invalid parameter(s): per_page'
+            data:
+              status: 400
+              params:
+                per_page: per_page must be between 1 (inclusive) and 100 (inclusive)
   parameters:
-    search:
-      name: search
+    fields:
+      name: _fields
       in: query
-      description: Limit results to those matching a string.
+      description: Comma-separated list of fields to limit the response to. Verified live, e.g. `_fields=id,slug,link,title`.
       schema:
         type: string
     perPage:
@@ -99,18 +113,10 @@ components:
         minimum: 1
         maximum: 100
         default: 10
-    page:
-      name: page
+    search:
+      name: search
       in: query
-      description: Current page of the collection. Defaults to 1.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-    fields:
-      name: _fields
-      in: query
-      description: Comma-separated list of fields to limit the response to. Verified live, e.g. `_fields=id,slug,link,title`.
+      description: Limit results to those matching a string.
       schema:
         type: string
     context:
@@ -123,7 +129,20 @@ components:
         - view
         - embed
         default: view
+    page:
+      name: page
+      in: query
+      description: Current page of the collection. Defaults to 1.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
   headers:
+    XWPTotal:
+      description: Total number of items in the collection.
+      schema:
+        type: integer
+      example: 129
     LinkPagination:
       description: RFC 8288 Link header carrying `next` and `prev` pagination relations.
       schema:
@@ -134,12 +153,36 @@ components:
       schema:
         type: integer
       example: 130
-    XWPTotal:
-      description: Total number of items in the collection.
-      schema:
-        type: integer
-      example: 129
   schemas:
+    Error:
+      type: object
+      description: The WordPress REST error envelope, verified live against cresilon.com. Note this is NOT RFC 9457 application/problem+json — it is served as application/json with a WordPress-specific shape.
+      properties:
+        code:
+          type: string
+          description: Machine-readable WordPress error code, e.g. `rest_post_invalid_id`.
+        message:
+          type: string
+          description: Human-readable message.
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+              description: HTTP status code, repeated in the body.
+            params:
+              type: object
+              additionalProperties:
+                type: string
+            details:
+              type: object
+              additionalProperties: true
+          required:
+          - status
+      required:
+      - code
+      - message
+      - data
     SearchResult:
       type: object
       description: A lightweight cross-content search result. Field set observed live on 2026-08-04.
@@ -170,46 +213,3 @@ components:
       - url
       - type
       - subtype
-    Error:
-      type: object
-      description: The WordPress REST error envelope, verified live against cresilon.com. Note this is NOT RFC 9457 application/problem+json — it is served as application/json with a WordPress-specific shape.
-      properties:
-        code:
-          type: string
-          description: Machine-readable WordPress error code, e.g. `rest_post_invalid_id`.
-        message:
-          type: string
-          description: Human-readable message.
-        data:
-          type: object
-          properties:
-            status:
-              type: integer
-              description: HTTP status code, repeated in the body.
-            params:
-              type: object
-              additionalProperties:
-                type: string
-            details:
-              type: object
-              additionalProperties: true
-          required:
-          - status
-      required:
-      - code
-      - message
-      - data
-  responses:
-    InvalidParam:
-      description: One or more query parameters failed validation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: rest_invalid_param
-            message: 'Invalid parameter(s): per_page'
-            data:
-              status: 400
-              params:
-                per_page: per_page must be between 1 (inclusive) and 100 (inclusive)

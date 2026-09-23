@@ -3,7 +3,7 @@ info:
   title: Cresilon News & Press Releases Posts API
   version: wp/v2
   summary: Public read surface of the Cresilon corporate news and press-release content API.
-  description: Cresilon publishes its corporate website (cresilon.com) on WordPress (WordPress.com Atomic hosting, nginx) with the core WordPress REST API enabled and anonymously readable. This specification was DERIVED by discovering the live route index at https://cresilon.com/wp-json/ and probing each route for anonymous access; only routes verified to return HTTP 200 without credentials are documented here as public operations. Write operations exist on the same routes but require authentication (WordPress cookie + X-WP-Nonce, or Application Passwords) and are not documented here; anonymous requests to them return HTTP 401. This is NOT a product API offered by Cresilon to customers — Cresilon is a biotechnology and medical-device manufacturer, not a software vendor. This is the content API of their marketing site, captured for discovery purposes. This document covers the `post` type, which backs Cresilon's news and press-release stream — FDA clearance announcements, TRAUMAGEL and VETIGEL launch news, clinical study results, conference presentations and executive interviews. At time of capture the collection held 36 published posts (observed in the X-WP-Total response header), spanning 2018 to July 2026.
+  description: Cresilon publishes its corporate website (cresilon.com) on WordPress (WordPress.com Atomic hosting, nginx) with the core WordPress REST API enabled and anonymously readable.
   contact:
     name: Cresilon
     url: https://cresilon.com/contact-us/
@@ -133,6 +133,98 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   parameters:
+    search:
+      name: search
+      in: query
+      description: Limit results to those matching a string.
+      schema:
+        type: string
+    offset:
+      name: offset
+      in: query
+      description: Offset the result set by a specific number of items.
+      schema:
+        type: integer
+    page:
+      name: page
+      in: query
+      description: Current page of the collection. Defaults to 1.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    include:
+      name: include
+      in: query
+      description: Limit result set to specific IDs.
+      schema:
+        type: array
+        items:
+          type: integer
+    embed:
+      name: _embed
+      in: query
+      description: Embed linked resources (author, featured media, terms) into the response.
+      schema:
+        type: boolean
+    fields:
+      name: _fields
+      in: query
+      description: Comma-separated list of fields to limit the response to. Verified live, e.g. `_fields=id,slug,link,title`.
+      schema:
+        type: string
+    id:
+      name: id
+      in: path
+      required: true
+      description: Unique numeric identifier for the object.
+      schema:
+        type: integer
+    context:
+      name: context
+      in: query
+      description: Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401.
+      schema:
+        type: string
+        enum:
+        - view
+        - embed
+        default: view
+    exclude:
+      name: exclude
+      in: query
+      description: Ensure result set excludes specific IDs.
+      schema:
+        type: array
+        items:
+          type: integer
+    perPage:
+      name: per_page
+      in: query
+      description: 'Maximum number of items to be returned in the result set. Verified live: values outside 1-100 return HTTP 400 `rest_invalid_param`.'
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 10
+    slugParam:
+      name: slug
+      in: query
+      description: Limit results to items with one of the given slugs.
+      schema:
+        type: array
+        items:
+          type: string
+    order:
+      name: order
+      in: query
+      description: Order sort attribute ascending or descending.
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+        default: desc
     orderby:
       name: orderby
       in: query
@@ -151,153 +243,7 @@ components:
         - include_slugs
         - title
         default: date
-    fields:
-      name: _fields
-      in: query
-      description: Comma-separated list of fields to limit the response to. Verified live, e.g. `_fields=id,slug,link,title`.
-      schema:
-        type: string
-    context:
-      name: context
-      in: query
-      description: Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401.
-      schema:
-        type: string
-        enum:
-        - view
-        - embed
-        default: view
-    perPage:
-      name: per_page
-      in: query
-      description: 'Maximum number of items to be returned in the result set. Verified live: values outside 1-100 return HTTP 400 `rest_invalid_param`.'
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 10
-    exclude:
-      name: exclude
-      in: query
-      description: Ensure result set excludes specific IDs.
-      schema:
-        type: array
-        items:
-          type: integer
-    page:
-      name: page
-      in: query
-      description: Current page of the collection. Defaults to 1.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-    order:
-      name: order
-      in: query
-      description: Order sort attribute ascending or descending.
-      schema:
-        type: string
-        enum:
-        - asc
-        - desc
-        default: desc
-    slugParam:
-      name: slug
-      in: query
-      description: Limit results to items with one of the given slugs.
-      schema:
-        type: array
-        items:
-          type: string
-    offset:
-      name: offset
-      in: query
-      description: Offset the result set by a specific number of items.
-      schema:
-        type: integer
-    search:
-      name: search
-      in: query
-      description: Limit results to those matching a string.
-      schema:
-        type: string
-    embed:
-      name: _embed
-      in: query
-      description: Embed linked resources (author, featured media, terms) into the response.
-      schema:
-        type: boolean
-    id:
-      name: id
-      in: path
-      required: true
-      description: Unique numeric identifier for the object.
-      schema:
-        type: integer
-    include:
-      name: include
-      in: query
-      description: Limit result set to specific IDs.
-      schema:
-        type: array
-        items:
-          type: integer
-  headers:
-    XWPTotal:
-      description: Total number of items in the collection.
-      schema:
-        type: integer
-      example: 36
-    XWPTotalPages:
-      description: Total number of pages in the collection at the current per_page.
-      schema:
-        type: integer
-      example: 18
-    LinkPagination:
-      description: RFC 8288 Link header carrying `next` and `prev` pagination relations.
-      schema:
-        type: string
-      example: <https://cresilon.com/wp-json/wp/v2/posts?per_page=2&page=2>; rel="next"
   schemas:
-    Error:
-      type: object
-      description: The WordPress REST error envelope, verified live against cresilon.com. Note this is NOT RFC 9457 application/problem+json — it is served as application/json with a WordPress-specific shape.
-      properties:
-        code:
-          type: string
-          description: Machine-readable WordPress error code, e.g. `rest_post_invalid_id`.
-        message:
-          type: string
-          description: Human-readable message.
-        data:
-          type: object
-          properties:
-            status:
-              type: integer
-              description: HTTP status code, repeated in the body.
-            params:
-              type: object
-              additionalProperties:
-                type: string
-            details:
-              type: object
-              additionalProperties: true
-          required:
-          - status
-      required:
-      - code
-      - message
-      - data
-    RenderedText:
-      type: object
-      description: WordPress rendered-text object.
-      properties:
-        rendered:
-          type: string
-          description: HTML-rendered value.
-      required:
-      - rendered
     Post:
       type: object
       description: A Cresilon news / press-release post as returned anonymously in `view` context. Field set observed live on 2026-08-04.
@@ -425,7 +371,72 @@ components:
       - content
       - categories
       - tags
+    RenderedText:
+      type: object
+      description: WordPress rendered-text object.
+      properties:
+        rendered:
+          type: string
+          description: HTML-rendered value.
+      required:
+      - rendered
+    Error:
+      type: object
+      description: The WordPress REST error envelope, verified live against cresilon.com. Note this is NOT RFC 9457 application/problem+json — it is served as application/json with a WordPress-specific shape.
+      properties:
+        code:
+          type: string
+          description: Machine-readable WordPress error code, e.g. `rest_post_invalid_id`.
+        message:
+          type: string
+          description: Human-readable message.
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+              description: HTTP status code, repeated in the body.
+            params:
+              type: object
+              additionalProperties:
+                type: string
+            details:
+              type: object
+              additionalProperties: true
+          required:
+          - status
+      required:
+      - code
+      - message
+      - data
+  headers:
+    LinkPagination:
+      description: RFC 8288 Link header carrying `next` and `prev` pagination relations.
+      schema:
+        type: string
+      example: <https://cresilon.com/wp-json/wp/v2/posts?per_page=2&page=2>; rel="next"
+    XWPTotal:
+      description: Total number of items in the collection.
+      schema:
+        type: integer
+      example: 36
+    XWPTotalPages:
+      description: Total number of pages in the collection at the current per_page.
+      schema:
+        type: integer
+      example: 18
   responses:
+    NotFound:
+      description: The requested object does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: rest_post_invalid_id
+            message: Invalid post ID.
+            data:
+              status: 404
     InvalidParam:
       description: One or more query parameters failed validation.
       content:
@@ -439,14 +450,3 @@ components:
               status: 400
               params:
                 per_page: per_page must be between 1 (inclusive) and 100 (inclusive)
-    NotFound:
-      description: The requested object does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            code: rest_post_invalid_id
-            message: Invalid post ID.
-            data:
-              status: 404

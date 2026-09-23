@@ -3,7 +3,7 @@ info:
   title: Cresilon News & Press Releases Comments API
   version: wp/v2
   summary: Public read surface of the Cresilon corporate news and press-release content API.
-  description: Cresilon publishes its corporate website (cresilon.com) on WordPress (WordPress.com Atomic hosting, nginx) with the core WordPress REST API enabled and anonymously readable. This specification was DERIVED by discovering the live route index at https://cresilon.com/wp-json/ and probing each route for anonymous access; only routes verified to return HTTP 200 without credentials are documented here as public operations. Write operations exist on the same routes but require authentication (WordPress cookie + X-WP-Nonce, or Application Passwords) and are not documented here; anonymous requests to them return HTTP 401. This is NOT a product API offered by Cresilon to customers — Cresilon is a biotechnology and medical-device manufacturer, not a software vendor. This is the content API of their marketing site, captured for discovery purposes. This document covers the `post` type, which backs Cresilon's news and press-release stream — FDA clearance announcements, TRAUMAGEL and VETIGEL launch news, clinical study results, conference presentations and executive interviews. At time of capture the collection held 36 published posts (observed in the X-WP-Total response header), spanning 2018 to July 2026.
+  description: Cresilon publishes its corporate website (cresilon.com) on WordPress (WordPress.com Atomic hosting, nginx) with the core WordPress REST API enabled and anonymously readable.
   contact:
     name: Cresilon
     url: https://cresilon.com/contact-us/
@@ -56,34 +56,6 @@ paths:
         '400':
           $ref: '#/components/responses/InvalidParam'
 components:
-  parameters:
-    perPage:
-      name: per_page
-      in: query
-      description: 'Maximum number of items to be returned in the result set. Verified live: values outside 1-100 return HTTP 400 `rest_invalid_param`.'
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 10
-    page:
-      name: page
-      in: query
-      description: Current page of the collection. Defaults to 1.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-    context:
-      name: context
-      in: query
-      description: Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401.
-      schema:
-        type: string
-        enum:
-        - view
-        - embed
-        default: view
   schemas:
     RenderedText:
       type: object
@@ -152,12 +124,6 @@ components:
       - code
       - message
       - data
-  headers:
-    XWPTotal:
-      description: Total number of items in the collection.
-      schema:
-        type: integer
-      example: 36
   responses:
     InvalidParam:
       description: One or more query parameters failed validation.
@@ -172,3 +138,37 @@ components:
               status: 400
               params:
                 per_page: per_page must be between 1 (inclusive) and 100 (inclusive)
+  headers:
+    XWPTotal:
+      description: Total number of items in the collection.
+      schema:
+        type: integer
+      example: 36
+  parameters:
+    perPage:
+      name: per_page
+      in: query
+      description: 'Maximum number of items to be returned in the result set. Verified live: values outside 1-100 return HTTP 400 `rest_invalid_param`.'
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 10
+    context:
+      name: context
+      in: query
+      description: Scope under which the request is made; determines fields present in the response. Only `view` and `embed` are available anonymously — `edit` returns HTTP 401.
+      schema:
+        type: string
+        enum:
+        - view
+        - embed
+        default: view
+    page:
+      name: page
+      in: query
+      description: Current page of the collection. Defaults to 1.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
