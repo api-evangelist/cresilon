@@ -64,5 +64,117 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Cresilon is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/cresilon_stock/
+Cresilon is a Brooklyn, New York biotechnology company founded in 2010 by Joe Landolina and Isaac Miller that develops, manufactures and markets hemostatic medical devices built on a proprietary plant-based hydrogel that stops moderate to severe bleeding in seconds without manual pressure. The company operates a GMP-certified, ISO 13485:2016 quality-managed biomanufacturing facility in Brooklyn's Industry City and sells two commercial products: VETIGEL, launched to the veterinary market in 2020 and licensed for animal-health distribution, and TRAUMAGEL, cleared by the FDA under 510(k) in 2024 and launched nationwide in the United States in January 2025 for prehospital, military and hospital control of traumatic external hemorrhage. Cresilon was named the number one medical-device company on Fast Company's World's Most Innovative Companies list in 2024 and returned to that list in 2026. Cresilon is a medical-device manufacturer rather than a software vendor, and publishes no commercial or developer-facing product API. The only machine-readable interface it exposes is the WordPress REST content API behind its corporate website at cresilon.com, captured here for discovery purposes.
+
+**Areas:** Company · Biotechnology · Medical Devices · Health · Hemostasis · Wound Care · Trauma Care · Veterinary · Life Sciences · Manufacturing
+
+## Cresilon on APIs.io
+
+Everything profiled for Cresilon is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/cresilon/](https://apis.io/providers/cresilon/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [Cresilon Website (WordPress REST)](https://apis.io/apis/cresilon/cresilon-com-website-wordpress-rest/) — The public WordPress REST API (wp-json) of the Cresilon website at cresilon.com: the route index of the site's content management system, catalogued as one…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [cresilon](https://apis.io/servers/cresilon/cresilon/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Cresilon Agentic Access](https://apis.io/agentic-access/cresilon/cresilon-agentic-access/)
+
+#### Collections (10)
+
+Postman and Open Collection request collections.
+
+- [Moved to /providers/cresilon/](https://apis.io/collections/cresilon/open-cresilon-authors-api/)
+- [Moved to /providers/cresilon/](https://apis.io/collections/cresilon/open-cresilon-comments-api/)
+- [Moved to /providers/cresilon/](https://apis.io/collections/cresilon/open-cresilon-discovery-api/)
+- [Moved to /providers/cresilon/](https://apis.io/collections/cresilon/open-cresilon-media-api/)
+- [Moved to /providers/cresilon/](https://apis.io/collections/cresilon/open-cresilon-oembed-api/)
+- [Moved to /providers/cresilon/](https://apis.io/collections/cresilon/open-cresilon-pages-api/)
+- [Moved to /providers/cresilon/](https://apis.io/collections/cresilon/open-cresilon-posts-api/)
+- [Moved to /providers/cresilon/](https://apis.io/collections/cresilon/open-cresilon-search-api/)
+- [Moved to /providers/cresilon/](https://apis.io/collections/cresilon/open-cresilon-seo-api/)
+- [Moved to /providers/cresilon/](https://apis.io/collections/cresilon/open-cresilon-taxonomy-api/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Cresilon Authentication](https://apis.io/security/cresilon/cresilon-authentication/)
+- [Cresilon Domain Security](https://apis.io/security/cresilon/cresilon-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://cresilon.com/)
+- [Sign up](https://cresilon.com/register/)
+- [Support](https://cresilon.com/contact-us/)
+- [Blog](https://cresilon.com/media/)
+- [Compliance](https://www.bsigroup.com/en-IE/products-and-services/assessment-and-certification/validation-and-verification/client-directory-certificate/MD%20822618)
+- [Terms of service](https://cresilon.com/terms-of-use/)
+- [Privacy policy](https://cresilon.com/privacy-policy/)
+
+## API Evangelist rating
+
+**Kin Score 22.9** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 58.9 |
+| Contract quality | 6.5 |
+| Contract governance | 4.5 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 30.4 |
+| Access clarity | 35.5 |
+
+**Agent readiness 7.2** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | documented (partial credit) |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 23.4** — Health
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/cresilon/](https://apis.io/providers/cresilon/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Cresilon: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/cresilon/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
